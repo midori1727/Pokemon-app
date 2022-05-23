@@ -1,0 +1,13 @@
+.headerWrapper {
+	display: flex;
+	justify-content: space-around;
+}
+
+.pokeballIcon {
+	width: 3rem;
+	height: auto;
+}
+
+.favoriteIcon {
+	color: red;
+}

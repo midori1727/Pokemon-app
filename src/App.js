@@ -1,15 +1,32 @@
 import './App.css';
-import FrontPage from './components/FrontPage';
-import PokemonLogo from './pokemon-logo.png'
+import { BrowserRouter as Router, Route, Routes  } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
+import FrontPage from './components/FrontPage/FrontPage';
+import SinglePokemon from './components/Single/SinglePokemon'
+// import Header from './components/Header/Header';
+
+
 
 function App() {
+
+	const navigate = useNavigate()
+
+	const navigateToHome = () => {
+		navigate('/')
+	}
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img className="logo" src={PokemonLogo} alt='pokemon-logo' /> 
-		<FrontPage />
-      </header>
-    </div>
+	// <Router>
+		<div className="App">
+		<img className="pokemonLogo" src={`${process.env.PUBLIC_URL}/image/pokemon-logo.png`} onClick={navigateToHome}/>
+		<Routes >
+			{/* <Header /> */}
+			{/* <FrontPage /> */}
+			<Route exact path="/:id" element={<SinglePokemon />} />
+			<Route exact path="/" element={<FrontPage />} />
+		</Routes >
+		</div>
+	// </Router>
   );
 }
 

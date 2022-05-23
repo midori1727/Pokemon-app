@@ -1,0 +1,41 @@
+.singlePokemonCard {
+	margin: 3rem;
+	background-color: rgb(82, 224, 177);
+	filter: drop-shadow(10px 10px 10px rgba(0,0,0,0.6));
+}
+.singlePokemonName {
+	color: white;
+	padding-top: 1rem;
+	font-size: 2.5rem;
+}
+
+.singlePokemonImg {
+	width: 20rem;
+	height: 20rem;
+}
+
+.singlePokemonInformationTab {
+	border-radius: 3rem 3rem 0 0;
+	background-color: white;
+}
+
+.MuiTabs-scroller {
+	margin-top: 1rem;
+}
+
+/* .discriptionSection {
+	display: flex;
+}
+
+.descriptionTitle {
+	color: rgb(54, 53, 53);
+} */
+
+.MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.css-iocxey-MuiPaper-root {
+	text-align: left;
+	box-shadow: none;
+}
+
+.space {
+	margin-right: 0.5rem;
+}

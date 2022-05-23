@@ -1,8 +1,20 @@
 .App {
   text-align: center;
+  margin: 0 3rem 0 3rem
 }
 
-.logo {
+/* .logo {
 	width: 30%;
 	height: auto;
+} */
+
+body {
+	background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+	
+	/* background-image: url("/public/image/pokemon-background-img.jpg"); */
 }
+
+ .pokemonLogo {
+	 width: 50%;
+	 height: auto;
+ }
