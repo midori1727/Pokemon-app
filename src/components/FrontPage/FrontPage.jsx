@@ -133,6 +133,7 @@ const FrontPage = () => {
 			// (ここに後ほどremoveポケモンを記入)
 		} else {
 			dispatch(addFavoritePokemon({id,name,url,boolean}))
+			setIsFavorite(true)
 		}
 	}
 
@@ -208,8 +209,15 @@ const FrontPage = () => {
 					{/* <img className="pokemonListImg" alt="pokemon" src={`https://img.pokemondb.net/artwork/${pokemon.url.substring(34,pokemon.url.length - 1)}.jpg`}/> */}
 					
 					<FavoriteIcon   className='pokemonListFavoriteIcon'
-					onClick={(e)=> addFavorite(e,pokemon.url.substring(34,pokemon.url.length - 1), pokemon.name, pokemon.url, true)}
-					style={{ color: favColor }}
+					onClick={(e)=> 
+						// {
+							addFavorite(e,pokemon.url.substring(34,pokemon.url.length - 1), pokemon.name, pokemon.url, true)
+						// ; setIsFavorite(!isFavorite)}
+					}
+					isFavorite={false}
+					// style={{ color: favColor }}
+					style={{ color: isFavorite ? '#F44336' : 'gray' }}
+					
 					 />
 					
 					{ < img className="pokemonListImg" alt="pokemon" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.url.substring(34,pokemon.url.length - 1)}.png`}/>

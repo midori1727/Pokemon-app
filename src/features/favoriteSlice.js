@@ -31,14 +31,11 @@ export const favoriteSlice = createSlice({
 		},
 		removeFavoritePokemon: (state, action) => {
 			state.amount -= 1
-			const removeNewFavoritePokemon = {
-				id: action.payload,
-				name: action.payload,
-				url: action.payload,
-				isFavorite: false
-			}
-			state.favoritePokemons = [removeNewFavoritePokemon, ...state.favoritePokemons]
+			state.favoritePokemons = state.favoritePokemons.filter((pokemon) => pokemon.id !== action.payload)
+	
 		}
+
+		
 	
   },
  

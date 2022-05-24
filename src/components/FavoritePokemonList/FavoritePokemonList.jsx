@@ -1,11 +1,12 @@
 import './FavoritePokemonList.css'
 import { useEffect, useState } from 'react'
-import { useSelector } from 'react-redux'
+import { useSelector, useDispatch } from 'react-redux'
 import { selectFavorite } from '../../features/favoriteSlice'
 import { useNavigate } from 'react-router-dom';
 import axios from 'axios'
 import LoadingAnimation from '../LoadingAnimation/LoadingAnimation'
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import { removeFavoritePokemon } from '../../features/favoriteSlice'
 
 
 const FavoritePokemonList = () => {
@@ -14,6 +15,7 @@ const FavoritePokemonList = () => {
 	const favoritePokemonList = useSelector(selectFavorite)
 	console.log(favoritePokemonList);
 	const navigate = useNavigate()
+	const dispatch = useDispatch()
 
 	useEffect(() => {
 		const getFavoritePokemonList = async () => {
@@ -21,34 +23,25 @@ const FavoritePokemonList = () => {
 			console.log(response.data.results)
 			const allPokemonList = response.data.results
 
-	
-
 			const newFavoritePokemon = favoritePokemonList.filter(favoritePokemon => 
 				allPokemonList.filter(allPokemon => allPokemon.name === favoritePokemon.name).length > 0);
 
 			console.log(newFavoritePokemon);
 			setNewFavoritePokemonList(newFavoritePokemon)
-
-			// const newFavoritePokemonList = allPokemonList.filter(allPokemon => 
-			// 	favoritePokemonList.filter(favoritePokemon => favoritePokemon.name === allPokemon.name).length > 0);
-			// 	console.log(newFavoritePokemonList);
-			
 			
 		}
 		getFavoritePokemonList()
 
-	},[])
+	},[favoritePokemonList])
 
 	const handleClick = (pokemonId) => {
 		navigate(`/${pokemonId}`)
 	}
 
-	const removeFavorite = (e) => {
+	const removeFavorite = (e,id) => {
 		e.stopPropagation()
-		alert('remoed')
+		dispatch(removeFavoritePokemon(id))
 	}
-
-
 
 
 
@@ -66,7 +59,7 @@ const FavoritePokemonList = () => {
 			<div className="pokemonList" key={pokemon.name} onClick={()=>handleClick(pokemon.url.substring(34,pokemon.url.length - 1))}>
 				<div className="pokemonListImgCard" >
 					
-					<FavoriteIcon   className='pokemonListFavoriteIcon' onClick={removeFavorite}/>
+					<FavoriteIcon   className='pokemonListFavoriteIcon'  style={{ color: '#F44336' }} onClick={(e) => removeFavorite(e,pokemon.id)}/>
 					
 					{ < img className="pokemonListImg" alt="pokemon" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.url.substring(34,pokemon.url.length - 1)}.png`}/>
 					?
