@@ -34,15 +34,25 @@
 	box-shadow: 5px 5px 2px 1px rgba(0, 0, 255, .2);
 	padding: 1rem;
 	margin: 2rem;
-	width: 10rem;
-	height: 14rem;
+	/* width: 10rem;
+	height: 14rem; */
+	width: 12rem;
+	height: 15rem;
 	cursor: pointer;
+
+	transition: transform .4s ease;/* ゆっくり変化させる */
+}
+
+.pokemonList:hover {
+	transform: scale(1.1);
 }
 
 
 .pokemonListImgCard {
-	width: 10rem;
-	height: 10rem;
+	/* width: 10rem;
+	height: 10rem; */
+	width: 12rem;
+	height: 12rem;
 	display: flex;
 	flex-direction: column;
 }

@@ -15,6 +15,7 @@ body {
 }
 
  .pokemonLogo {
-	 width: 50%;
-	 height: auto;
+	width: 40%;
+	height: auto;
+	cursor: pointer;
  }

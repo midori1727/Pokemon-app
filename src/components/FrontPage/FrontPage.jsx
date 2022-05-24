@@ -15,8 +15,8 @@ import Tooltip from '@mui/material/Tooltip';
 import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 import Badge from '@mui/material/Badge';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import {addFavoritePokemon} from '../../features/favoriteSlice'
-import { selectFavoriteAmount,selectFavorite } from "../../features/favoriteSlice";
+// import { addFavoritePokemon } from '../../features/favoriteSlice'
+import { selectFavoriteAmount, selectFavorite, removeFavoritePokemon, addFavoritePokemon } from "../../features/favoriteSlice";
 
 import _array from 'lodash/array'
 import { CandlestickChartRounded, ContentCutOutlined } from "@mui/icons-material";
@@ -36,8 +36,9 @@ const FrontPage = () => {
 	const favoritePokemonAmount = useSelector(selectFavoriteAmount)
 	const selectFavoritePokemons = useSelector(selectFavorite)
 
-	const [favColor, setFavColor] = useState("gray");
-	const [isFavorite, setIsFavorite] = useState(false);
+	// const [favColor, setFavColor] = useState("gray");
+	// const [isFavorite, setIsFavorite] = useState(false);
+	const [favoriteList, setFavoriteList] = useState([]);
 
 
 
@@ -121,24 +122,27 @@ const FrontPage = () => {
 		navigate('/favorite')
 	}
 	
-	const addFavorite = (e,id, name, url, boolean) => {
+	const toggleFavorite = (e,id, name, url) => {
 		e.stopPropagation()
 		// if same pokemon is clicked, return index Number(which are over 0)
 		const  findSamePokemon  = selectFavoritePokemons.findIndex(function(element){
 			return element.name === name;
 		});
 		
+		// if same pokemon is already in selectFavoritePokemons
 		if(findSamePokemon >= 0) {
-			return
-			// (ここに後ほどremoveポケモンを記入)
+			dispatch(removeFavoritePokemon(id))
+			setFavoriteList(favoriteList.filter((favorite) => (favorite !== name)))
+		// if new pokemon is clicked
 		} else {
-			dispatch(addFavoritePokemon({id,name,url,boolean}))
-			setIsFavorite(true)
+			dispatch(addFavoritePokemon({id,name,url}))
+			setFavoriteList([...favoriteList, name]);
 		}
 	}
 
 	
 
+	console.log(favoriteList);
 	  
 	
 	
@@ -195,7 +199,7 @@ const FrontPage = () => {
 
 		{pokemonList ?
 		<>
-		{pokemonList.map((pokemon)=> (
+		{pokemonList.map((pokemon, index)=> (
 			<>
 			{/* send pokemon id */}
 			<div className="pokemonList" key={pokemon.name} onClick={()=>handleClick(pokemon.url.substring(34,pokemon.url.length - 1))}>
@@ -211,12 +215,17 @@ const FrontPage = () => {
 					<FavoriteIcon   className='pokemonListFavoriteIcon'
 					onClick={(e)=> 
 						// {
-							addFavorite(e,pokemon.url.substring(34,pokemon.url.length - 1), pokemon.name, pokemon.url, true)
+							toggleFavorite(e,pokemon.url.substring(34,pokemon.url.length - 1), pokemon.name, pokemon.url)
 						// ; setIsFavorite(!isFavorite)}
 					}
-					isFavorite={false}
+					
+					// isFavorite={false}
 					// style={{ color: favColor }}
-					style={{ color: isFavorite ? '#F44336' : 'gray' }}
+
+					// style={{ color: isFavorite ? '#F44336' : 'gray' }}
+					style={{ color: favoriteList.includes(pokemon.name) ? '#F44336' : 'gray' }}
+					
+
 					
 					 />
 					
