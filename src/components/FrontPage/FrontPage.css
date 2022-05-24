@@ -53,14 +53,14 @@
 }
 
 .pokemonListName {
-	font-size: 1.5rem;
+	font-size: 1.2rem;
 	margin-bottom: 0;
 	margin-top: 0;
 }
 
 .pokemonListFavoriteIcon {
 	font-size: 1.5rem;
-	color: gray;
+	/* color: gray; */
 }
 
 .pokemonListFavoriteIcon:hover {

@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Route, Routes  } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import FrontPage from './components/FrontPage/FrontPage';
 import SinglePokemon from './components/Single/SinglePokemon'
+import FavoritePokemonList from './components/FavoritePokemonList/FavoritePokemonList';
 // import Header from './components/Header/Header';
 
 
@@ -24,9 +25,10 @@ function App() {
 			{/* <FrontPage /> */}
 			<Route exact path="/:id" element={<SinglePokemon />} />
 			<Route exact path="/" element={<FrontPage />} />
+			<Route exact path="/favorite" element={<FavoritePokemonList />} />
 		</Routes >
 		</div>
-	// </Router>
+	//  </Router>
   );
 }
 

@@ -1,6 +1,7 @@
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useNavigate } from 'react-router-dom';
+import { useLinkClickHandler, useNavigate } from 'react-router-dom';
+import { useDispatch, useSelector } from "react-redux";
 import './FrontPage.css';
 // import Heiader from '../Header/Header'
 import Button from '@mui/material/Button';
@@ -14,6 +15,12 @@ import Tooltip from '@mui/material/Tooltip';
 import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 import Badge from '@mui/material/Badge';
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import {addFavoritePokemon} from '../../features/favoriteSlice'
+import { selectFavoriteAmount,selectFavorite } from "../../features/favoriteSlice";
+
+import _array from 'lodash/array'
+import { CandlestickChartRounded, ContentCutOutlined } from "@mui/icons-material";
+
 
 const FrontPage = () => {
 
@@ -25,44 +32,14 @@ const FrontPage = () => {
 
 	const [selectType, setSelectType] = useState('');
 	const [inputPokemon, setInputPokemon] = useState('')
+	const dispatch = useDispatch()
+	const favoritePokemonAmount = useSelector(selectFavoriteAmount)
+	const selectFavoritePokemons = useSelector(selectFavorite)
+
+	const [favColor, setFavColor] = useState("gray");
+	const [isFavorite, setIsFavorite] = useState(false);
 
 
-	// useEffect(() => {
-	// 	const getPoke = async () => {
-			
-	// 		if(inputPokemon) {
-	// 			const response = await axios.get((`https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0`))
-	// 			const fileteredPokemons = response.data.results.filter(pokemon => pokemon.name.toLowerCase().includes(inputPokemon.toLowerCase()));
-	// 			setPokemonList(fileteredPokemons)
-	// 			setpreviousPokemonPage('')
-	// 			setNextPokemonPage('')
-	// 		} else {
-	// 			const response = await axios.get((currentPokemonPage))
-	// 			if(response.data.results){
-	// 				setPokemonList(response.data.results)
-	// 			}else {
-	// 				const newPokemonList = response.data.pokemon.map((pokemon) => {
-	// 					return pokemon.pokemon
-	// 				})
-	// 				setPokemonList(newPokemonList)
-	// 			}
-	
-	// 			if(response.data.previous){
-	// 				setpreviousPokemonPage(response.data.previous)
-	// 			} else {
-	// 				setpreviousPokemonPage('')
-	// 			}
-	
-	// 			if(response.data.next){
-	// 				setNextPokemonPage(response.data.next)
-	// 			} else {
-	// 				setNextPokemonPage('')
-	// 			}
-	// 		}
-	// 	}
-	// 	getPoke()
-		
-	// },[currentPokemonPage,inputPokemon])
 
 
 	useEffect(() => {
@@ -72,13 +49,14 @@ const FrontPage = () => {
 			
 				if(inputPokemon) {
 					const response = await axios.get((`https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0`))
-					// const response = await axios.get((`https://pokeapi.co/api/v2/pokemon?limit=1000&offset=0`))
 					const fileteredPokemons = response.data.results.filter(pokemon => pokemon.name.toLowerCase().includes(inputPokemon.toLowerCase()));
 					setPokemonList(fileteredPokemons)
 					setpreviousPokemonPage('')
 					setNextPokemonPage('')
+					
 				} else {
 					const response = await axios.get((currentPokemonPage))
+					console.log(response);
 					if(response.data.results){
 						setPokemonList(response.data.results)
 					}else {
@@ -99,6 +77,7 @@ const FrontPage = () => {
 					} else {
 						setNextPokemonPage('')
 					}
+
 				}
 			}
 			getPokemonData()
@@ -112,8 +91,7 @@ const FrontPage = () => {
 		
 		
 		
-	},[currentPokemonPage,inputPokemon])
-
+	},[currentPokemonPage,inputPokemon,selectFavoritePokemons])
 	
 	const handleClick = (pokemonId) => {
 		navigate(`/${pokemonId}`)
@@ -134,49 +112,44 @@ const FrontPage = () => {
 	}
 
 
-// 	var foo = 'https://pokeapi.co/api/v2/pokemon/3/'
-// console.log(foo.substring(34, foo.length - 1));
-
-// pokemon.url.substring(34, pokemon.url.length - 1)
-
-// const handleChange = async (select) => {
-// 		setInputPokemon(select);
-// 		console.log(select);	
-// 		const response = await axios.get(`https://pokeapi.co/api/v2/type/${select}`);
-// 		console.log(response.data.pokemon);
-// 		setCurrentPokemonPage(`https://pokeapi.co/api/v2/type/${select}`)
-// 		setNextPokemonPage('')
-// 		setpreviousPokemonPage('')
-
-// 		const newPokemonList = response.data.pokemon.map((pokemon) => {
-// 			return pokemon.pokemon
-// 		})
-
-// 		setPokemonList(newPokemonList)
-// 		console.log(newPokemonList);
-		
-// 	};
-	
-
-
-
 	const handleInputChange =  (e) => {
 		setInputPokemon(e.target.value)
 		setSelectType('')
 	}
 
+	const navigateToFavorite = () => {
+		navigate('/favorite')
+	}
+	
+	const addFavorite = (e,id, name, url, boolean) => {
+		e.stopPropagation()
+		// if same pokemon is clicked, return index Number(which are over 0)
+		const  findSamePokemon  = selectFavoritePokemons.findIndex(function(element){
+			return element.name === name;
+		});
+		
+		if(findSamePokemon >= 0) {
+			return
+			// (ここに後ほどremoveポケモンを記入)
+		} else {
+			dispatch(addFavoritePokemon({id,name,url,boolean}))
+		}
+	}
+
 	
 
+	  
+	
+	
 	return (
 
 		<>
 		{/* <Header /> */}
 		<div className='headerWrapper'>
 
-			<TextField id="outlined-basic" label="Sök Pokemon" variant="outlined"
-			onChange={handleInputChange} value={inputPokemon}
-			/>
-				<FormControl sx={{ width: '10rem' }}>
+			<TextField id="outlined-search" label="Sök Pokemon" type="search" onChange={handleInputChange} value={inputPokemon}/>	
+			
+			<FormControl sx={{ width: '10rem' }}>
 				<InputLabel id="demo-simple-select-label">Typ</InputLabel>
 				<Select
 				labelId="demo-simple-select-label"
@@ -206,14 +179,14 @@ const FrontPage = () => {
 				</Select>
 			</FormControl>
 			<Tooltip title="favorite" arrow>
-			<Badge badgeContent={4} color="secondary">
-				<FavoriteIcon  sx={{ fontSize: '3rem' }} className='favoriteIcon'/>
-			</Badge>
+				<Badge badgeContent={favoritePokemonAmount} color="secondary">
+					<FavoriteIcon  sx={{ fontSize: '3rem' }} className='favoriteIcon' onClick={navigateToFavorite}/>
+				</Badge>
 			</Tooltip>
 			<Tooltip title="Fångat" arrow>
-			<Badge badgeContent={4} color="secondary">
-				<img className="pokeballIcon" src={`${process.env.PUBLIC_URL}/image/pokeball.png`} />
-			</Badge>
+				<Badge badgeContent={4} color="secondary">
+					<img className="pokeballIcon" src={`${process.env.PUBLIC_URL}/image/pokeball.png`} />
+				</Badge>
 			</Tooltip>
 		</div>
 		<div className="pokemonListWrapper">
@@ -234,7 +207,10 @@ const FrontPage = () => {
 					{/* <img className="pokemonListImg" alt="pokemon" src={`https://img.pokemondb.net/artwork/${pokemon.name}.jpg`}/> */}
 					{/* <img className="pokemonListImg" alt="pokemon" src={`https://img.pokemondb.net/artwork/${pokemon.url.substring(34,pokemon.url.length - 1)}.jpg`}/> */}
 					
-					<FavoriteIcon   className='pokemonListFavoriteIcon'/>
+					<FavoriteIcon   className='pokemonListFavoriteIcon'
+					onClick={(e)=> addFavorite(e,pokemon.url.substring(34,pokemon.url.length - 1), pokemon.name, pokemon.url, true)}
+					style={{ color: favColor }}
+					 />
 					
 					{ < img className="pokemonListImg" alt="pokemon" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.url.substring(34,pokemon.url.length - 1)}.png`}/>
 					?
