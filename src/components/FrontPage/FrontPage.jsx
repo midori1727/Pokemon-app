@@ -1,11 +1,10 @@
+import './FrontPage.css';
 import axios from "axios";
 import { useEffect, useState } from "react";
-import { useLinkClickHandler, useNavigate } from 'react-router-dom';
+import { useNavigate } from 'react-router-dom';
 import { useDispatch, useSelector } from "react-redux";
-import './FrontPage.css';
-// import Heiader from '../Header/Header'
 import Button from '@mui/material/Button';
-
+import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
 import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
@@ -15,11 +14,10 @@ import Tooltip from '@mui/material/Tooltip';
 import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 import Badge from '@mui/material/Badge';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-// import { addFavoritePokemon } from '../../features/favoriteSlice'
 import { selectFavoriteAmount, selectFavorite, removeFavoritePokemon, addFavoritePokemon } from "../../features/favoriteSlice";
 
 import _array from 'lodash/array'
-import { CandlestickChartRounded, ContentCutOutlined } from "@mui/icons-material";
+
 
 
 const FrontPage = () => {
@@ -28,19 +26,12 @@ const FrontPage = () => {
 	const [previousPokemonPage, setpreviousPokemonPage] = useState('')
 	const [nextPokemonPage, setNextPokemonPage] = useState('')
 	const [pokemonList, setPokemonList] = useState('')
-	const navigate = useNavigate ();
-
 	const [selectType, setSelectType] = useState('');
 	const [inputPokemon, setInputPokemon] = useState('')
+	const navigate = useNavigate ();
 	const dispatch = useDispatch()
 	const favoritePokemonAmount = useSelector(selectFavoriteAmount)
 	const selectFavoritePokemons = useSelector(selectFavorite)
-
-	// const [favColor, setFavColor] = useState("gray");
-	// const [isFavorite, setIsFavorite] = useState(false);
-	const [favoriteList, setFavoriteList] = useState([]);
-
-
 
 
 	useEffect(() => {
@@ -128,28 +119,29 @@ const FrontPage = () => {
 		const  findSamePokemon  = selectFavoritePokemons.findIndex(function(element){
 			return element.name === name;
 		});
+
 		
 		// if same pokemon is already in selectFavoritePokemons
 		if(findSamePokemon >= 0) {
 			dispatch(removeFavoritePokemon(id))
-			setFavoriteList(favoriteList.filter((favorite) => (favorite !== name)))
 		// if new pokemon is clicked
 		} else {
 			dispatch(addFavoritePokemon({id,name,url}))
-			setFavoriteList([...favoriteList, name]);
 		}
 	}
 
 	
+	const favoritePokemonList = selectFavoritePokemons.map((p) => {
+		return p.name
+	})
 
-	console.log(favoriteList);
+	
 	  
 	
 	
 	return (
 
 		<>
-		{/* <Header /> */}
 		<div className='headerWrapper'>
 
 			<TextField id="outlined-search" label="Sök Pokemon" type="search" onChange={handleInputChange} value={inputPokemon}/>	
@@ -204,30 +196,16 @@ const FrontPage = () => {
 			{/* send pokemon id */}
 			<div className="pokemonList" key={pokemon.name} onClick={()=>handleClick(pokemon.url.substring(34,pokemon.url.length - 1))}>
 				<div className="pokemonListImgCard" >
-					{/* {<img src={`https://img.pokemondb.net/artwork/${pokemon.name}.jpg`}/> ?
-					<img className="pokemonListImg" alt="pokemon" src={`https://img.pokemondb.net/artwork/${pokemon.name}.jpg`}/>
-					:
-					<p>NO IMAGE</p>
-				} */}
-					{/* <img className="pokemonListImg" alt="pokemon" src={`https://img.pokemondb.net/artwork/${pokemon.name}.jpg`}/> */}
-					{/* <img className="pokemonListImg" alt="pokemon" src={`https://img.pokemondb.net/artwork/${pokemon.url.substring(34,pokemon.url.length - 1)}.jpg`}/> */}
-					
-					<FavoriteIcon   className='pokemonListFavoriteIcon'
-					onClick={(e)=> 
-						// {
-							toggleFavorite(e,pokemon.url.substring(34,pokemon.url.length - 1), pokemon.name, pokemon.url)
-						// ; setIsFavorite(!isFavorite)}
-					}
-					
-					// isFavorite={false}
-					// style={{ color: favColor }}
-
-					// style={{ color: isFavorite ? '#F44336' : 'gray' }}
-					style={{ color: favoriteList.includes(pokemon.name) ? '#F44336' : 'gray' }}
-					
-
-					
-					 />
+					<IconButton 
+					aria-label="favorite"
+					className='pokemonListFavoriteIcon' 
+					onClick={(e)=> toggleFavorite(e,pokemon.url.substring(34,pokemon.url.length - 1), pokemon.name, pokemon.url)}
+					>
+						<FavoriteIcon
+						className='pokemonListFavoriteIcon'
+						style={{ color: favoritePokemonList.includes(pokemon.name) ? '#F44336' : 'gray' }}
+						/>
+					</IconButton>
 					
 					{ < img className="pokemonListImg" alt="pokemon" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.url.substring(34,pokemon.url.length - 1)}.png`}/>
 					?

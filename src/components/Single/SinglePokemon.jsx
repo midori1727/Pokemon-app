@@ -1,9 +1,10 @@
 import './SinglePokemon.css'
-import { useParams } from 'react-router-dom'
+import { useParams, useNavigate } from 'react-router-dom'
 import axios from "axios";
 import { useEffect, useState } from "react";
 import LoadingAnimation from '../LoadingAnimation/LoadingAnimation'
 import { type } from '@testing-library/user-event/dist/type';
+
 
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
@@ -39,6 +40,7 @@ const SinglePokemon = () => {
 	// const [evolution, setEvolution] =useState([])
 
 	const params = useParams()
+	const navigate = useNavigate()
 	const pokemonId = params.id
 
 	// grid template
@@ -135,6 +137,13 @@ const SinglePokemon = () => {
 		// selectedPokemonsJapaneseName
 		 ?
 		<div className='singlePokemonCard'>
+			{/* <img className="goBackIcon" alt="go_back" src={Arrow}/> */}
+			<img
+			className="goBackIcon"
+			src={`${process.env.PUBLIC_URL}/image/arrow_back.svg`}
+			onClick={() => navigate(-1)}
+			/>
+
 			<h1 className='singlePokemonName'>{selectedPokemon.name}</h1>
 			{/* <h2>{selectedPokemonsJapaneseName}</h2> */}
 

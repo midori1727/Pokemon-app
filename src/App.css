@@ -1,6 +1,15 @@
+@import url('https://fonts.googleapis.com/css2?family=Akshar:wght@300&family=Roboto+Flex:opsz,wght@8..144,200&display=swap');
+
+
 .App {
-  text-align: center;
-  margin: 0 3rem 0 3rem
+	text-align: center;
+	margin: 0 3rem 0 3rem;
+	/* font-family: 'Akshar', sans-serif; */
+	font-family: 'Roboto Flex', sans-serif;
+}
+
+.css-ahj2mt-MuiTypography-root {
+	font-family: 'Roboto Flex', sans-serif !important;
 }
 
 /* .logo {

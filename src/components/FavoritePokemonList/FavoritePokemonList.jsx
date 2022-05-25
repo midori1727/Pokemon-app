@@ -1,11 +1,12 @@
 import './FavoritePokemonList.css'
+import axios from 'axios'
 import { useEffect, useState } from 'react'
 import { useSelector, useDispatch } from 'react-redux'
-import { selectFavorite } from '../../features/favoriteSlice'
 import { useNavigate } from 'react-router-dom';
-import axios from 'axios'
+import { selectFavorite } from '../../features/favoriteSlice'
 import LoadingAnimation from '../LoadingAnimation/LoadingAnimation'
 import FavoriteIcon from '@mui/icons-material/Favorite';
+import IconButton from '@mui/material/IconButton';
 import { removeFavoritePokemon } from '../../features/favoriteSlice'
 
 
@@ -59,7 +60,9 @@ const FavoritePokemonList = () => {
 			<div className="pokemonList" key={pokemon.name} onClick={()=>handleClick(pokemon.url.substring(34,pokemon.url.length - 1))}>
 				<div className="pokemonListImgCard" >
 					
-					<FavoriteIcon   className='pokemonListFavoriteIcon'  style={{ color: '#F44336' }} onClick={(e) => removeFavorite(e,pokemon.id)}/>
+					<IconButton aria-label="favorite" className='pokemonListFavoriteIcon' onClick={(e) => removeFavorite(e,pokemon.id)}>
+						<FavoriteIcon   className='pokemonListFavoriteIcon'  style={{ color: '#F44336' }} />
+					</IconButton>
 					
 					{ < img className="pokemonListImg" alt="pokemon" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.url.substring(34,pokemon.url.length - 1)}.png`}/>
 					?

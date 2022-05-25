@@ -37,7 +37,7 @@
 	/* width: 10rem;
 	height: 14rem; */
 	width: 12rem;
-	height: 15rem;
+	height: 16rem;
 	cursor: pointer;
 
 	transition: transform .4s ease;/* ゆっくり変化させる */
@@ -63,6 +63,7 @@
 }
 
 .pokemonListName {
+	font-family: 'Akshar', sans-serif;
 	font-size: 1.2rem;
 	margin-bottom: 0;
 	margin-top: 0;
@@ -75,4 +76,8 @@
 
 .pokemonListFavoriteIcon:hover {
 	color: red;
+}
+.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.pokemonListFavoriteIcon.css-78trlr-MuiButtonBase-root-MuiIconButton-root {
+	width: 2.5rem;
+	height: 2.5rem;
 }
