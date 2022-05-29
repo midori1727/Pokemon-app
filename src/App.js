@@ -4,7 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import FrontPage from './components/FrontPage/FrontPage';
 import SinglePokemon from './components/Single/SinglePokemon'
 import FavoritePokemonList from './components/FavoritePokemonList/FavoritePokemonList';
-import CapturedPokemonList from './components/CapturedPokemonList/CapturedPokemonList';
+import CollectedPokemonList from './components/CollectedPokemonList/CollectedPokemonList';
 
 
 
@@ -23,7 +23,7 @@ function App() {
 			<Route exact path="/:id" element={<SinglePokemon />} />
 			<Route exact path="/" element={<FrontPage />} />
 			<Route exact path="/favorite" element={<FavoritePokemonList />} />
-			<Route exact path="/captured" element={<CapturedPokemonList />} />
+			<Route exact path="/collected" element={<CollectedPokemonList />} />
 		</Routes >
 		</div>
   );

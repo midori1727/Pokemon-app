@@ -1,8 +1,11 @@
 import './FrontPage.css';
-import axios from "axios";
-import { useEffect, useState } from "react";
 import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import { selectFavoriteAmount, selectFavorite, removeFavoritePokemon, addFavoritePokemon } from "../../features/favoriteSlice";
+import { selectCollectedAmount} from "../../features/collectedSlice";
+
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
@@ -14,26 +17,25 @@ import Tooltip from '@mui/material/Tooltip';
 import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 import Badge from '@mui/material/Badge';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-import { selectFavoriteAmount, selectFavorite, removeFavoritePokemon, addFavoritePokemon } from "../../features/favoriteSlice";
-import { selectCaputuredAmount} from "../../features/capturedSlice";
 
-import _array from 'lodash/array'
+
+// import _array from 'lodash/array'
 
 
 
 const FrontPage = () => {
 
-	const [currentPokemonPage, setCurrentPokemonPage] = useState('https://pokeapi.co/api/v2/pokemon/')
-	const [previousPokemonPage, setpreviousPokemonPage] = useState('')
-	const [nextPokemonPage, setNextPokemonPage] = useState('')
-	const [pokemonList, setPokemonList] = useState('')
-	const [selectType, setSelectType] = useState('');
-	const [inputPokemon, setInputPokemon] = useState('')
+	const [ currentPokemonPage, setCurrentPokemonPage ] = useState('https://pokeapi.co/api/v2/pokemon/')
+	const [ previousPokemonPage, setpreviousPokemonPage ] = useState('')
+	const [ nextPokemonPage, setNextPokemonPage ] = useState('')
+	const [ pokemonList, setPokemonList ] = useState('')
+	const [ selectType, setSelectType ] = useState('');
+	const [ inputPokemon, setInputPokemon ] = useState('')
 	const navigate = useNavigate ();
 	const dispatch = useDispatch()
 	const favoritePokemonAmount = useSelector(selectFavoriteAmount)
 	const selectFavoritePokemons = useSelector(selectFavorite)
-	const caputuredPokemonAmount = useSelector(selectCaputuredAmount)
+	const collectedPokemonAmount = useSelector(selectCollectedAmount)
 
 
 	useEffect(() => {
@@ -81,9 +83,7 @@ const FrontPage = () => {
 			}
 			console.log(error)
 		}
-		
-		
-		
+	
 	},[currentPokemonPage,inputPokemon,selectFavoritePokemons])
 	
 	const handleClick = (pokemonId) => {
@@ -114,8 +114,8 @@ const FrontPage = () => {
 		navigate('/favorite')
 	}
 
-	const navigateToCaptured = () => {
-		navigate('/captured')
+	const navigateToCollected = () => {
+		navigate('/collected')
 	}
 	
 	const toggleFavorite = (e,id, name, url) => {
@@ -142,8 +142,6 @@ const FrontPage = () => {
 
 	
 	  
-	
-	
 	return (
 
 		<>
@@ -185,9 +183,9 @@ const FrontPage = () => {
 					<FavoriteIcon  sx={{ fontSize: '3rem' }} className='favoriteIcon' onClick={navigateToFavorite}/>
 				</Badge>
 			</Tooltip>
-			<Tooltip title="captured list" arrow>
-				<Badge badgeContent={caputuredPokemonAmount} color="secondary">
-					<img className="pokeballIcon" src={`${process.env.PUBLIC_URL}/image/pokeball.png`} onClick={navigateToCaptured}/>
+			<Tooltip title="collected list" arrow>
+				<Badge badgeContent={collectedPokemonAmount} color="secondary">
+					<img className="pokeballIcon" src={`${process.env.PUBLIC_URL}/image/pokeball.png`} onClick={navigateToCollected}/>
 				</Badge>
 			</Tooltip>
 		</div>

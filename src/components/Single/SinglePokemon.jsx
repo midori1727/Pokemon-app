@@ -1,13 +1,12 @@
 import './SinglePokemon.css'
 import { useParams, useNavigate } from 'react-router-dom'
-import axios from "axios";
 import { useEffect, useState } from "react";
+import { useDispatch, useSelector } from "react-redux";
+import axios from "axios";
+import Modal from 'react-modal';
+import { selectCollected, selectCollectedAmount, addCollectedPokemon, removeCollectedPokemon } from "../../features/collectedSlice";
 import Animation from '../Animation/Animation'
 import LoadingAnimation from '../LoadingAnimation/LoadingAnimation'
-
-import { useDispatch, useSelector } from "react-redux";
-import { selectCaputured, selectCaputuredAmount, addCaputuredPokemon, removeCaputuredPokemon } from "../../features/capturedSlice";
-
 
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
@@ -15,68 +14,37 @@ import Tab from '@mui/material/Tab';
 import Typography from '@mui/material/Typography';
 import Box from '@mui/material/Box';
 import Button from '@mui/material/Button';
-
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
 
-import {
-	BarChart,
-	Bar,
-	XAxis,
-	YAxis,
-	CartesianGrid,
-	Tooltip,
-	Legend,
-	ResponsiveContainer
-  } from "recharts";
-import { useListbox } from '@mui/material/node_modules/@mui/base';
-
+import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 
 
 const SinglePokemon = () => {
 
-	const [selectedPokemon, setSelectedPokemon] = useState([])
-	const [selectedPokemonId, setSelectedPokemonId] = useState('')
-	const [selectedPokemonsJapaneseName, setSelectedPokemonsJapaneseName] = useState('')
-	const [pokemonStatsData, setPokemonStatsData] = useState([])
-	// const [evolution, setEvolution] =useState([])
-	const [ backgroundColor, setBackgroundColor] =  useState('')
-	const [evolutionChainUrl, setEvolutionChainUrl] = useState('')
-	const [evolutionFirst, setEvolutionFirst] =useState('')
-	const [evolutionSecond, setEvolutionSecond] =useState([])
-	const [evolutionThird, setEvolutionThird] =useState([])
-
-	// テスト
-	const [ captured, setCaptured ] = useState(false)
-	const [ isAlreadyCaptured, setIsAlreadyCaptured ] = useState(false)
-	// const [ totalAverage, setTotalAverage ] = useState(false)
+	const [ selectedPokemon, setSelectedPokemon] = useState([])
+	// const [ selectedPokemonId, setSelectedPokemonId ] = useState('')
+	const [ selectedPokemonsJapaneseName, setSelectedPokemonsJapaneseName ] = useState('')
+	const [ pokemonStatsData, setPokemonStatsData ] = useState([])
+	const [ backgroundColor, setBackgroundColor ] =  useState('')
+	const [ evolutionChainUrl, setEvolutionChainUrl ] = useState('')
+	const [ evolutionFirst, setEvolutionFirst ] =useState('')
+	const [ evolutionSecond, setEvolutionSecond ] =useState([])
+	const [ evolutionThird, setEvolutionThird ] =useState([])
+	const [ collected, setCollected ] = useState(false)
+	const [ isAlreadyCollected, setIsAlreadyCollected ] = useState(false)
+	const collectedPokemonAmount = useSelector(selectCollectedAmount)
+	const selectcollectedPokemons = useSelector(selectCollected)
+	const [ catching, setCatching ] = useState(false)
+	const [ isCollectedShowModal, setIsCollectedShowModal ] = useState(false);
+	const [ isFailedShowModal, setIsFailedShowModal ] = useState(false);
+	const params = useParams()
+	const pokemonId = params.id
+	const navigate = useNavigate()
 	const dispatch = useDispatch()
-	const capturedPokemonAmount = useSelector(selectCaputuredAmount)
-	const selectcapturedPokemons = useSelector(selectCaputured)
-  // テスト
 	
 
-	const params = useParams()
-	const navigate = useNavigate()
-	const pokemonId = params.id
-
-
-	 // テスト
-	// console.log(capturedPokemonAmount);
-	// console.log(selectcapturedPokemons);
-	console.log(isAlreadyCaptured);
-	// console.log('selectedPokemon',selectedPokemon);
-	// console.log('selectedPokemonId',selectedPokemonId);
-	// console.log('selectedPokemon.name',selectedPokemon.name);
-	// console.log('selectedPokemon.species.url',selectedPokemon.species.url);
-	console.log(selectcapturedPokemons);
-	console.log(selectcapturedPokemons.map((caputuredPokemons) => {
-		return caputuredPokemons.name.includes(selectedPokemon)
-	}));
-	console.log(selectedPokemon.name);
-	// capturedPokemonNames.includes(selectedPokemon)
-	 // テスト
 
 	// grid template
 	const Item = styled(Paper)(({ theme }) => ({
@@ -127,10 +95,7 @@ const SinglePokemon = () => {
 	};
 	// MUI tab component
 
-	console.log('selectedPokemonId',selectedPokemonId);
-	console.log('selectedPokemonId',typeof(selectedPokemonId));
-	console.log('pokemonId',pokemonId);
-	console.log('pokemonId',typeof(pokemonId));
+	
 
 	
 	// get pokemon information
@@ -139,19 +104,15 @@ const SinglePokemon = () => {
 		try {
 			const getSelectedPokemon = async () => {
 				const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
-				// const response3 = await axios.get(`https://pokeapi.co/api/v2/evolution-chain/${pokemonId}/`)
 				console.log('response',response);
-				// console.log('evolution',response3);
 				setSelectedPokemon(response.data)
-				setSelectedPokemonId(response.data.id)
+			
 
-				
 				const pokemonStatsDataArray = [];
 				let len = response.data.stats.length;
 				for (let i = 0; i < len; i++) {
 					pokemonStatsDataArray.push({
 						name: response.data.stats[i].stat.name,
-						// pv: response.data.stats[i].base_stat
 						point: response.data.stats[i].base_stat
 					});
 				}
@@ -161,10 +122,7 @@ const SinglePokemon = () => {
 				// set background color 
 				switch(response.data.types[0].type.name) {
 					case 'normal':
-						// setBackgroundColor('rgb(238, 183, 80)')
-						// setBackgroundColor('rgb(255, 223, 133)')
 						setBackgroundColor('rgb(255, 209, 83)')
-						
 						break;
 					case 'water':
 						setBackgroundColor('#609FB5')
@@ -185,16 +143,13 @@ const SinglePokemon = () => {
 						setBackgroundColor('#CCCCDE')
 						break;
 					case 'ice':
-						// setBackgroundColor('#7FCCEC')
 						setBackgroundColor('rgb(158, 214, 228)')
 						break;
 					case 'electric':
 						setBackgroundColor('#F9BE00')
 						break;	
 					case 'dragon':
-						// setBackgroundColor('#48D0B0')
 						setBackgroundColor('rgb(32, 202, 131)')
-						
 						break;
 					case 'ghost':
 						setBackgroundColor('rgb(202, 212, 209)')
@@ -223,29 +178,15 @@ const SinglePokemon = () => {
 
 				}
 
-
 	
-				// check and set true if selected pokemon is already in captured pokemon useList.
-				// if(selectcapturedPokemons) {
-				// 	const capturedPokemonIds = selectcapturedPokemons.map((caputuredPokemons) => {
-				// 		return caputuredPokemons.id
-				// 	})
-				// 	let newId = Number(pokemonId)
-				// 	setIsAlreadyCaptured(capturedPokemonIds.includes(newId))
-				// }
-				
-				if(selectcapturedPokemons) {
-					const capturedPokemonNames = selectcapturedPokemons.map((caputuredPokemons) => {
-						return caputuredPokemons.name
+				if(selectcollectedPokemons) {
+					const collectedPokemonNames = selectcollectedPokemons.map((collectedPokemons) => {
+						return collectedPokemons.name
 					})
-					// let newName = Number(pokemonId)
-					console.log(capturedPokemonNames.includes(response.data.name));
-					setIsAlreadyCaptured(capturedPokemonNames.includes(response.data.name))
+					
+					console.log(collectedPokemonNames.includes(response.data.name));
+					setIsAlreadyCollected(collectedPokemonNames.includes(response.data.name))
 				}
-				
-				
-
-
 
 			}
 			getSelectedPokemon()
@@ -254,7 +195,7 @@ const SinglePokemon = () => {
 				console.log(error);
 		}
 
-	},[pokemonId, capturedPokemonAmount])
+	},[pokemonId, collectedPokemonAmount])
 
 	// get pokemon japanese name
 	useEffect(() => {
@@ -262,7 +203,6 @@ const SinglePokemon = () => {
 			const getSelectedPokemonJapaneseName = async () => {
 				
 				const response = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${pokemonId}`);
-				// console.log('japan', response.data.evolution_chain.url);
 				setSelectedPokemonsJapaneseName(response.data.names[0].name);
 				setEvolutionChainUrl(response.data.evolution_chain.url)
 			
@@ -273,7 +213,7 @@ const SinglePokemon = () => {
 				console.log(error);
 		}
 
-	},[pokemonId, capturedPokemonAmount])
+	},[pokemonId, collectedPokemonAmount])
 
 
 
@@ -311,13 +251,12 @@ const SinglePokemon = () => {
 		} catch(error) {
 				console.log(error);
 		}
-	},[evolutionChainUrl,pokemonId, capturedPokemonAmount])
+	},[evolutionChainUrl, pokemonId, collectedPokemonAmount])
+
 
 	const handleClick = (newPokemonId) => {
 		navigate(`/${newPokemonId}`)
 	}
-
-	
 
 
 	const getPokemon = (id,name,url) => {
@@ -341,51 +280,39 @@ const SinglePokemon = () => {
 
 		let result = Math.random() < probability / 100
 
-		setCaptured(result)
+		setCollected(result)
 
-		if(captured) {
-			dispatch(addCaputuredPokemon({id,name,url}))
+		setCatching(true)
+	
+
+		setTimeout(() => {
+			setCatching(false)
+			if(collected) {
+				setIsCollectedShowModal(true)
+			} else {
+				setIsFailedShowModal(true)
+			}
+		}, 1 * 1000)
+
+		if(collected) {
+			dispatch(addCollectedPokemon({id,name,url}))
 		}
-
-		if(captured) {
-			alert('ポケモンゲット！')
-		} else {
-			alert('ポケモンは逃げた・・・')
-		}
-
 	}
 
 
 	const releasePokemon = (id) => {
-		dispatch(removeCaputuredPokemon(id))
+		dispatch(removeCollectedPokemon(id))
 	}
-	
-
-	// テスト
-	// const newFavoritePokemon = favoritePokemonList.filter(favoritePokemon => 
-	// 	allPokemonList.filter(allPokemon =>  allPokemon.name === favoritePokemon.name).length > 0);
-
-		// selectcapturedPokemons.filter((caputuredPokemons) => {
-		// 	// console.log(caputuredPokemons.id === selectedPokemonId);
-		// 	setIsAlreadyCaptured(caputuredPokemons.id === selectedPokemonId)
-		// })
-
 	
 
 	return (
 		<>
-		{selectedPokemon  
+		{selectedPokemon && !catching
 		?
 		<div className="singlePokemonWrapper">
 			<div className='singlePokemonCard' S
 			style={{  background: backgroundColor}}>
 			
-				
-				{/* <img
-				className="goBackIcon"
-				src={`${process.env.PUBLIC_URL}/image/arrow_back.svg`}
-				onClick={() => navigate(-1)}
-				/> */}
 
 				<h1 className='singlePokemonName'>{selectedPokemon.name}</h1>
 				{selectedPokemonsJapaneseName && <h2 className='singlePokemonJapaneseName'>{selectedPokemonsJapaneseName}</h2>}
@@ -393,10 +320,11 @@ const SinglePokemon = () => {
 
 				<div className='singlePokemonImgButton'>
 
-					<img className="singlePokemonImg" alt="pokemon" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${selectedPokemonId}.png`}/>
+					{/* <img className="singlePokemonImg" alt="pokemon" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${selectedPokemonId}.png`}/> */}
+					<img className="singlePokemonImg" alt="pokemon" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonId}.png`}/>
 
 
-					{isAlreadyCaptured ?
+					{isAlreadyCollected ?
 
 					<Button
 					className='releasePokemonButton'
@@ -404,7 +332,6 @@ const SinglePokemon = () => {
 					color="secondary"
 					startIcon={<img className="pokeballIcon"
 					src={`${process.env.PUBLIC_URL}/image/pokeball.png`} />}
-					// onClick={() => releasePokemon(selectedPokemonId)}
 					onClick={() => releasePokemon(pokemonId)}
 					>
 						Release this Pokémon
@@ -416,26 +343,12 @@ const SinglePokemon = () => {
 					color="secondary"
 					startIcon={<img className="pokeballIcon"
 					src={`${process.env.PUBLIC_URL}/image/pokeball.png`} />}
-					onClick={() => getPokemon(pokemonId, selectedPokemon.name,
-						//  selectedPokemon.species.url
-						selectedPokemon.location_area_encounters.substring(34,selectedPokemon.length - 11)
-						 )}
+					onClick={() => getPokemon(pokemonId, selectedPokemon.name, selectedPokemon.location_area_encounters.substring(34,selectedPokemon.length - 11))}
 					>
 						Get this Pokémon
 					</Button>
-
 					}
-					{/* <Button
-					className='getPokemonButton'
-					variant="outlined"
-					color="secondary"
-					startIcon={<img className="pokeballIcon"
-					src={`${process.env.PUBLIC_URL}/image/pokeball.png`} />}
-					onClick={() => getPokemon(selectedPokemonId, selectedPokemon.name, selectedPokemon.species.url)}
-					>
-						Get this Pokémon
-					</Button> */}
-
+					
 				</div>
 
 				<div className='singlePokemonInformationTab'>
@@ -542,9 +455,71 @@ const SinglePokemon = () => {
 				
 			</div>
 		</div>
+
+	    :  catching ? <Animation />
 		
 		: <LoadingAnimation />
 		}
+
+
+		< Modal isOpen={isCollectedShowModal}
+				onRequestClose={() => setIsCollectedShowModal(false)}
+				overlayClassName={{
+					base: "overlay-base",
+					afterOpen: "overlay-after",
+					beforeClose: "overlay-before"
+					}}
+					className={{
+					base: "content-base",
+					afterOpen: "content-after",
+					beforeClose: "content-before"
+					}}
+					closeTimeoutMS={500}>
+			<p className='modalTitle'>You've got the Pokémon!</p>
+			
+			<Button
+			className='modalBackButton'
+			variant="outlined"
+			color="secondary"
+			onClick={() => setIsCollectedShowModal(false)} >
+				Back to the Pokémon details
+			</Button>
+
+			<Button
+			className='modalToCapturedListButton'
+			variant="outlined"
+			color="secondary"
+			onClick={() => {navigate('/collected'); setIsCollectedShowModal(false) }} >
+				Go to collected list
+			</Button>
+			
+		</Modal>
+
+
+		< Modal isOpen={isFailedShowModal}
+				onRequestClose={() => setIsFailedShowModal(false)}
+				overlayClassName={{
+					base: "overlay-base",
+					afterOpen: "overlay-after",
+					beforeClose: "overlay-before"
+					}}
+					className={{
+					base: "content-base",
+					afterOpen: "content-after",
+					beforeClose: "content-before"
+					}}
+					closeTimeoutMS={500}>
+			<p className='modalTitle'>The Pokémon run away...</p>
+			
+			<Button
+			className='modalBackButton'
+			variant="outlined"
+			color="secondary"
+			onClick={() => setIsFailedShowModal(false) }>
+				Back to the Pokémon details
+			</Button>
+			
+		</Modal>
 		
 		</>
 	)
