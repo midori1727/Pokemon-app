@@ -1,6 +1,12 @@
+.singlePokemonWrapper {
+	display: flex;
+	justify-content: center;
+}
+
+
 .singlePokemonCard {
 	margin: 3rem;
-	background-color: rgb(82, 224, 177);
+	width: 50rem;
 	filter: drop-shadow(10px 10px 10px rgba(0,0,0,0.6));
 }
 
@@ -8,6 +14,7 @@
 	width: 3rem;
 	height: 3rem;
 	cursor: pointer;
+	text-align: left ;
 }
 
 .singlePokemonName {
@@ -15,6 +22,24 @@
 	color: white;
 	padding-top: 1rem;
 	font-size: 2.5rem;
+	margin-top: 0;
+    margin-bottom: 0;
+}
+
+.singlePokemonJapaneseName {
+	font-family: 'Akshar', sans-serif;
+	color: white;
+	margin-bottom: 0;
+	margin-top: 0.3rem;
+}
+
+.singlePokemonImgButton {
+	display: flex;
+	/* justify-content: center; */
+	align-items: center;
+	justify-content: space-around;
+	margin-left: 5rem;
+	margin-right: 5rem;
 }
 
 .singlePokemonImg {
@@ -22,9 +47,30 @@
 	height: 20rem;
 }
 
+.getPokemonButton {
+	
+}
+
+/* getPokemonButton css style */
+.MuiButton-root.MuiButton-outlined.MuiButton-outlinedSecondary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.getPokemonButton.css-wnpvqa-MuiButtonBase-root-MuiButton-root {
+	border-radius: 1.6rem;
+	color: white;
+    border-color: white;
+}
+
 .singlePokemonInformationTab {
 	border-radius: 3rem 3rem 0 0;
 	background-color: white;
+}
+
+/* Tab css title style */
+.MuiButtonBase-root.MuiTab-root.MuiTab-textColorPrimary.Mui-selected.css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
+	font-family: 'Roboto Flex', sans-serif;
+}
+
+/* Tab css title style */
+.MuiButtonBase-root.MuiTab-root.MuiTab-textColorPrimary.css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
+	font-family: 'Roboto Flex', sans-serif;
 }
 
 .MuiTabs-scroller {
@@ -46,4 +92,15 @@
 
 .space {
 	margin-right: 0.5rem;
+}
+
+.singlepokemonDescription {
+	/* font-weight: bold; */
+	font-size: 1.5rem;
+}
+
+.evolutionImage {
+	width: 10rem;
+	height: 10rem;
+	cursor: pointer;
 }

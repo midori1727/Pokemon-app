@@ -13,7 +13,6 @@ let persistor = persistStore(store)
 
 ReactDOM.render(
   <React.StrictMode>
-	   
 		<Router>
 			<Provider store={store}>
 				<PersistGate persistor={persistor}>

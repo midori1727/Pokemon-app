@@ -44,6 +44,7 @@ const FavoritePokemonList = () => {
 		dispatch(removeFavoritePokemon(id))
 	}
 
+	console.log(newFavoritePokemonList)
 
 
 	return (
@@ -57,19 +58,24 @@ const FavoritePokemonList = () => {
 		{newFavoritePokemonList.map((pokemon)=> (
 			<>
 			
-			<div className="pokemonList" key={pokemon.name} onClick={()=>handleClick(pokemon.url.substring(34,pokemon.url.length - 1))}>
+			<div className="pokemonList" key={pokemon.name}
+			//  onClick={()=>handleClick(pokemon.url.substring(34,pokemon.url.length - 1))}
+			onClick={()=>handleClick(pokemon.id)}
+			 >
 				<div className="pokemonListImgCard" >
 					
 					<IconButton aria-label="favorite" className='pokemonListFavoriteIcon' onClick={(e) => removeFavorite(e,pokemon.id)}>
 						<FavoriteIcon   className='pokemonListFavoriteIcon'  style={{ color: '#F44336' }} />
 					</IconButton>
 					
-					{ < img className="pokemonListImg" alt="pokemon" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.url.substring(34,pokemon.url.length - 1)}.png`}/>
-					?
+					{/* {  */}
+					< img className="pokemonListImg" alt="pokemon" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.id}.png`}/>
+					{/* < img className="pokemonListImg" alt="pokemon" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.url.substring(34,pokemon.url.length - 1)}.png`}/> */}
+					{/* ?
 						< img className="pokemonListImg" alt="pokemon" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.url.substring(34,pokemon.url.length - 1)}.png`}/>
 					:
 					<p>no image</p>
-					}
+					} */}
 					
 					<p className="pokemonListName" >{pokemon.name}</p>
 				</div>
@@ -84,6 +90,6 @@ const FavoritePokemonList = () => {
 		</>
 		
 	)
-}
+	}
 
 export default FavoritePokemonList

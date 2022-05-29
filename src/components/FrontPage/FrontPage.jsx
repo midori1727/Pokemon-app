@@ -15,6 +15,7 @@ import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 import Badge from '@mui/material/Badge';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import { selectFavoriteAmount, selectFavorite, removeFavoritePokemon, addFavoritePokemon } from "../../features/favoriteSlice";
+import { selectCaputuredAmount} from "../../features/capturedSlice";
 
 import _array from 'lodash/array'
 
@@ -32,6 +33,7 @@ const FrontPage = () => {
 	const dispatch = useDispatch()
 	const favoritePokemonAmount = useSelector(selectFavoriteAmount)
 	const selectFavoritePokemons = useSelector(selectFavorite)
+	const caputuredPokemonAmount = useSelector(selectCaputuredAmount)
 
 
 	useEffect(() => {
@@ -48,7 +50,6 @@ const FrontPage = () => {
 					
 				} else {
 					const response = await axios.get((currentPokemonPage))
-					console.log(response);
 					if(response.data.results){
 						setPokemonList(response.data.results)
 					}else {
@@ -112,6 +113,10 @@ const FrontPage = () => {
 	const navigateToFavorite = () => {
 		navigate('/favorite')
 	}
+
+	const navigateToCaptured = () => {
+		navigate('/captured')
+	}
 	
 	const toggleFavorite = (e,id, name, url) => {
 		e.stopPropagation()
@@ -144,10 +149,10 @@ const FrontPage = () => {
 		<>
 		<div className='headerWrapper'>
 
-			<TextField id="outlined-search" label="Sök Pokemon" type="search" onChange={handleInputChange} value={inputPokemon}/>	
+			<TextField id="outlined-search" label="Search Pokémon" type="search" onChange={handleInputChange} value={inputPokemon}/>	
 			
 			<FormControl sx={{ width: '10rem' }}>
-				<InputLabel id="demo-simple-select-label">Typ</InputLabel>
+				<InputLabel id="demo-simple-select-label">Type</InputLabel>
 				<Select
 				labelId="demo-simple-select-label"
 				id="demo-simple-select"
@@ -156,33 +161,33 @@ const FrontPage = () => {
 				onChange={(e) => handleChange(e.target.value)}
 				>
 				<MenuItem value={'normal'}>Normal</MenuItem>
-				<MenuItem value={'water'}>Vatten</MenuItem>
-				<MenuItem value={'fire'}>Eld</MenuItem>
-				<MenuItem value={'grass'}>Gräs</MenuItem>
-				<MenuItem value={'ground'}>Mark</MenuItem>
-				<MenuItem value={'rock'}>Sten</MenuItem>
-				<MenuItem value={'steel'}>Stål</MenuItem>
-				<MenuItem value={'ice'}>Is</MenuItem>
-				<MenuItem value={'electric'}>Elektrisk</MenuItem>
-				<MenuItem value={'dragon'}>Drake</MenuItem>
-				<MenuItem value={'ghost'}>Spöke</MenuItem>
-				<MenuItem value={'psychic'}>Psykisk</MenuItem>
-				<MenuItem value={'fighting'}>Strid</MenuItem>
-				<MenuItem value={'poison'}>Gift</MenuItem>
-				<MenuItem value={'bug'}>Kryp</MenuItem>
-				<MenuItem value={'flying'}>Flygande</MenuItem>
-				<MenuItem value={'dark'}>Mörk</MenuItem>
-				<MenuItem value={'fairy'}>Fe</MenuItem>
+				<MenuItem value={'water'}>Water</MenuItem>
+				<MenuItem value={'fire'}>Fire</MenuItem>
+				<MenuItem value={'grass'}>Grass</MenuItem>
+				<MenuItem value={'ground'}>Ground</MenuItem>
+				<MenuItem value={'rock'}>Rock</MenuItem>
+				<MenuItem value={'steel'}>Steel</MenuItem>
+				<MenuItem value={'ice'}>Ice</MenuItem>
+				<MenuItem value={'electric'}>Electric</MenuItem>
+				<MenuItem value={'dragon'}>Dragon</MenuItem>
+				<MenuItem value={'ghost'}>Ghost</MenuItem>
+				<MenuItem value={'psychic'}>Psychic</MenuItem>
+				<MenuItem value={'fighting'}>Fighting</MenuItem>
+				<MenuItem value={'poison'}>Poison</MenuItem>
+				<MenuItem value={'bug'}>Bug</MenuItem>
+				<MenuItem value={'flying'}>Flying</MenuItem>
+				<MenuItem value={'dark'}>Dark</MenuItem>
+				<MenuItem value={'fairy'}>Fairy</MenuItem>
 				</Select>
 			</FormControl>
-			<Tooltip title="favorite" arrow>
+			<Tooltip title="favorite list" arrow>
 				<Badge badgeContent={favoritePokemonAmount} color="secondary">
 					<FavoriteIcon  sx={{ fontSize: '3rem' }} className='favoriteIcon' onClick={navigateToFavorite}/>
 				</Badge>
 			</Tooltip>
-			<Tooltip title="Fångat" arrow>
-				<Badge badgeContent={4} color="secondary">
-					<img className="pokeballIcon" src={`${process.env.PUBLIC_URL}/image/pokeball.png`} />
+			<Tooltip title="captured list" arrow>
+				<Badge badgeContent={caputuredPokemonAmount} color="secondary">
+					<img className="pokeballIcon" src={`${process.env.PUBLIC_URL}/image/pokeball.png`} onClick={navigateToCaptured}/>
 				</Badge>
 			</Tooltip>
 		</div>
@@ -191,7 +196,7 @@ const FrontPage = () => {
 
 		{pokemonList ?
 		<>
-		{pokemonList.map((pokemon, index)=> (
+		{pokemonList.map((pokemon)=> (
 			<>
 			{/* send pokemon id */}
 			<div className="pokemonList" key={pokemon.name} onClick={()=>handleClick(pokemon.url.substring(34,pokemon.url.length - 1))}>
@@ -232,12 +237,24 @@ const FrontPage = () => {
 
 		{previousPokemonPage &&
 		<>
-		<Button variant="outlined" onClick={goToPreviousPage}>Previous</Button>
+		<Button
+		variant="outlined"
+		className='previousButton'
+		sx={"border-color:rgba(0, 0, 0, 0.87);; color: rgba(0, 0, 0, 0.87);"}
+		onClick={goToPreviousPage}>
+			Previous
+		</Button>
 		</>
 		}
 		{nextPokemonPage &&
 		<>
-		<Button variant="outlined" onClick={goToNextPage}>Next</Button>
+		<Button
+		variant="outlined"
+		className='nextButton'
+		sx={"border-color:rgba(0, 0, 0, 0.87);; color: rgba(0, 0, 0, 0.87);"}
+		onClick={goToNextPage}>
+			Next
+		</Button>
 		</>
 		}
 		</>

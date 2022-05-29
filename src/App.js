@@ -1,10 +1,10 @@
 import './App.css';
-import { BrowserRouter as Router, Route, Routes  } from 'react-router-dom';
+import { Route, Routes  } from 'react-router-dom';
 import { useNavigate } from 'react-router-dom';
 import FrontPage from './components/FrontPage/FrontPage';
 import SinglePokemon from './components/Single/SinglePokemon'
 import FavoritePokemonList from './components/FavoritePokemonList/FavoritePokemonList';
-// import Header from './components/Header/Header';
+import CapturedPokemonList from './components/CapturedPokemonList/CapturedPokemonList';
 
 
 
@@ -17,18 +17,15 @@ function App() {
 	}
 
   return (
-	// <Router>
 		<div className="App">
 		<img className="pokemonLogo" src={`${process.env.PUBLIC_URL}/image/pokemon-logo.png`} onClick={navigateToHome}/>
 		<Routes >
-			{/* <Header /> */}
-			{/* <FrontPage /> */}
 			<Route exact path="/:id" element={<SinglePokemon />} />
 			<Route exact path="/" element={<FrontPage />} />
 			<Route exact path="/favorite" element={<FavoritePokemonList />} />
+			<Route exact path="/captured" element={<CapturedPokemonList />} />
 		</Routes >
 		</div>
-	//  </Router>
   );
 }
 
