@@ -24,7 +24,6 @@ import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, Responsive
 const SinglePokemon = () => {
 
 	const [ selectedPokemon, setSelectedPokemon] = useState([])
-	// const [ selectedPokemonId, setSelectedPokemonId ] = useState('')
 	const [ selectedPokemonsJapaneseName, setSelectedPokemonsJapaneseName ] = useState('')
 	const [ pokemonStatsData, setPokemonStatsData ] = useState([])
 	const [ backgroundColor, setBackgroundColor ] =  useState('')
@@ -122,7 +121,7 @@ const SinglePokemon = () => {
 				// set background color 
 				switch(response.data.types[0].type.name) {
 					case 'normal':
-						setBackgroundColor('rgb(255, 209, 83)')
+						setBackgroundColor('#fbe095')
 						break;
 					case 'water':
 						setBackgroundColor('#609FB5')
@@ -143,16 +142,16 @@ const SinglePokemon = () => {
 						setBackgroundColor('#CCCCDE')
 						break;
 					case 'ice':
-						setBackgroundColor('rgb(158, 214, 228)')
+						setBackgroundColor('#9ed6e4')
 						break;
 					case 'electric':
 						setBackgroundColor('#F9BE00')
 						break;	
 					case 'dragon':
-						setBackgroundColor('rgb(32, 202, 131)')
+						setBackgroundColor('#20ca83')
 						break;
 					case 'ghost':
-						setBackgroundColor('rgb(202, 212, 209)')
+						setBackgroundColor('#cad4d1')
 						break;
 					case 'psychic':
 						setBackgroundColor('#9B7FA6')
@@ -179,6 +178,7 @@ const SinglePokemon = () => {
 				}
 
 	
+				// check if pokemon är already in collection
 				if(selectcollectedPokemons) {
 					const collectedPokemonNames = selectcollectedPokemons.map((collectedPokemons) => {
 						return collectedPokemons.name
@@ -259,7 +259,7 @@ const SinglePokemon = () => {
 	}
 
 
-	const getPokemon = (id,name,url) => {
+	const catchPokemon = (id, name, url) => {
 		
 		let total = 0
 		let probability
@@ -274,17 +274,15 @@ const SinglePokemon = () => {
 			probability = 20
 		}  else if(total > 30) {
 			probability = 40
-		}  else if(total > 10) {
+		}  else if(total > 20) {
 			probability = 60
 		}
 
 		let result = Math.random() < probability / 100
 
 		setCollected(result)
-
 		setCatching(true)
 	
-
 		setTimeout(() => {
 			setCatching(false)
 			if(collected) {
@@ -295,10 +293,9 @@ const SinglePokemon = () => {
 		}, 1 * 1000)
 
 		if(collected) {
-			dispatch(addCollectedPokemon({id,name,url}))
+			dispatch(addCollectedPokemon({id, name, url}))
 		}
 	}
-
 
 	const releasePokemon = (id) => {
 		dispatch(removeCollectedPokemon(id))
@@ -313,14 +310,11 @@ const SinglePokemon = () => {
 			<div className='singlePokemonCard' S
 			style={{  background: backgroundColor}}>
 			
-
 				<h1 className='singlePokemonName'>{selectedPokemon.name}</h1>
 				{selectedPokemonsJapaneseName && <h2 className='singlePokemonJapaneseName'>{selectedPokemonsJapaneseName}</h2>}
 				
-
 				<div className='singlePokemonImgButton'>
 
-					{/* <img className="singlePokemonImg" alt="pokemon" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${selectedPokemonId}.png`}/> */}
 					<img className="singlePokemonImg" alt="pokemon" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonId}.png`}/>
 
 
@@ -330,22 +324,20 @@ const SinglePokemon = () => {
 					className='releasePokemonButton'
 					variant="outlined"
 					color="secondary"
-					startIcon={<img className="pokeballIcon"
-					src={`${process.env.PUBLIC_URL}/image/pokeball.png`} />}
+					startIcon={<img className="pokeballIcon" src={`${process.env.PUBLIC_URL}/image/pokeball.png`} />}
 					onClick={() => releasePokemon(pokemonId)}
 					>
 						Release this Pokémon
 					</Button>
 					:
 					<Button
-					className='getPokemonButton'
+					className='catchPokemonButton'
 					variant="outlined"
 					color="secondary"
-					startIcon={<img className="pokeballIcon"
-					src={`${process.env.PUBLIC_URL}/image/pokeball.png`} />}
-					onClick={() => getPokemon(pokemonId, selectedPokemon.name, selectedPokemon.location_area_encounters.substring(34,selectedPokemon.length - 11))}
+					startIcon={<img className="pokeballIcon" src={`${process.env.PUBLIC_URL}/image/pokeball.png`} />}
+					onClick={() => catchPokemon(pokemonId, selectedPokemon.name, selectedPokemon.location_area_encounters.substring(34,selectedPokemon.length - 11))}
 					>
-						Get this Pokémon
+						Catch this Pokémon
 					</Button>
 					}
 					
@@ -475,7 +467,7 @@ const SinglePokemon = () => {
 					beforeClose: "content-before"
 					}}
 					closeTimeoutMS={500}>
-			<p className='modalTitle'>You've got the Pokémon!</p>
+			<p className='modalTitle'>You've caught the Pokémon!</p>
 			
 			<Button
 			className='modalBackButton'
@@ -490,7 +482,7 @@ const SinglePokemon = () => {
 			variant="outlined"
 			color="secondary"
 			onClick={() => {navigate('/collected'); setIsCollectedShowModal(false) }} >
-				Go to collected list
+				Go to Collection
 			</Button>
 			
 		</Modal>
@@ -505,11 +497,11 @@ const SinglePokemon = () => {
 					}}
 					className={{
 					base: "content-base",
-					afterOpen: "content-after",
+					afterOpen: "content-after-run-away",
 					beforeClose: "content-before"
 					}}
 					closeTimeoutMS={500}>
-			<p className='modalTitle'>The Pokémon run away...</p>
+			<p className='modalTitle'>The Pokémon ran away...</p>
 			
 			<Button
 			className='modalBackButton'

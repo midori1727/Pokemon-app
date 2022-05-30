@@ -48,8 +48,8 @@
 }
 
 
-/* getPokemonButton css style */
-.MuiButton-root.MuiButton-outlined.MuiButton-outlinedSecondary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.getPokemonButton.css-wnpvqa-MuiButtonBase-root-MuiButton-root {
+/* catchPokemonButton css style */
+.MuiButton-root.MuiButton-outlined.MuiButton-outlinedSecondary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.catchPokemonButton.css-wnpvqa-MuiButtonBase-root-MuiButton-root {
 	border-radius: 1.6rem;
 	color: white;
     border-color: white;
@@ -180,7 +180,7 @@
 	transition-timing-function: ease-in-out;
   }
   
-  .content-after {
+  .content-after-run-away {
 	width: 70%;
 	height: 40%;
 	background: -webkit-linear-gradient(90deg, #EC6F66 10%, #F3A183 90%); 
@@ -195,4 +195,15 @@
 	width: 0%;
 	height: 0%;
 	background-color: transparent;
+  }
+
+  .content-after {
+	width: 70%;
+	height: 40%;
+	background: -webkit-linear-gradient(90deg, #8e66ec 10%, #927ee9 90%); 
+	background:    -moz-linear-gradient(90deg, #8e66ec 10%, #927ee9 90%);
+	background:     -ms-linear-gradient(90deg, #8e66ec 10%, #927ee9 90%);
+	background:      -o-linear-gradient(90deg, #8e66ec 10%, #927ee9 90%);
+	background:         linear-gradient(90deg, #8e66ec 10%, #927ee9 90%);
+	flex-direction: column;
   }

@@ -73,7 +73,7 @@ const CollectedPokemonList = () => {
 
 	return (
 		<>
-		<h1>Collected pokemon list</h1>
+		<h1>Your collection</h1>
 		<div className="pokemonListWrapper">
 			
 

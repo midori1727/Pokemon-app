@@ -5,7 +5,7 @@ const Animation = () => {
 	return (
 		<div className='bg-cover'>
 			<img className="pokeball" src={`${process.env.PUBLIC_URL}/image/pokeball.png`} />
-			<p className='capturingPokemon'>Försöker fånga....</p>
+			<p className='capturingPokemon'>Catching...</p>
 		</div>
 	)
 }

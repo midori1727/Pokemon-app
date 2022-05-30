@@ -5,7 +5,6 @@ import { useDispatch, useSelector } from "react-redux";
 import axios from "axios";
 import { selectFavoriteAmount, selectFavorite, removeFavoritePokemon, addFavoritePokemon } from "../../features/favoriteSlice";
 import { selectCollectedAmount} from "../../features/collectedSlice";
-
 import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
 import TextField from '@mui/material/TextField';
@@ -17,10 +16,6 @@ import Tooltip from '@mui/material/Tooltip';
 import LoadingAnimation from "../LoadingAnimation/LoadingAnimation";
 import Badge from '@mui/material/Badge';
 import FavoriteIcon from '@mui/icons-material/Favorite';
-
-
-// import _array from 'lodash/array'
-
 
 
 const FrontPage = () => {
@@ -38,11 +33,12 @@ const FrontPage = () => {
 	const collectedPokemonAmount = useSelector(selectCollectedAmount)
 
 
+
 	useEffect(() => {
 
 		try {
 			const getPokemonData = async () => {
-			
+
 				if(inputPokemon) {
 					const response = await axios.get((`https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0`))
 					const fileteredPokemons = response.data.results.filter(pokemon => pokemon.name.toLowerCase().includes(inputPokemon.toLowerCase()));
@@ -79,7 +75,6 @@ const FrontPage = () => {
 		} catch(error) {
 			if(error.response.status === 404) {
 				console.log(error)
-				console.log('error');
 			}
 			console.log(error)
 		}
@@ -98,7 +93,7 @@ const FrontPage = () => {
 		setCurrentPokemonPage(nextPokemonPage)
 	}
 
-	const handleChange = async (select) => {
+	const handleSelectChange = async (select) => {
 		setCurrentPokemonPage(`https://pokeapi.co/api/v2/type/${select}`)
 		setSelectType(select)
 		setInputPokemon('')
@@ -120,11 +115,10 @@ const FrontPage = () => {
 	
 	const toggleFavorite = (e,id, name, url) => {
 		e.stopPropagation()
-		// if same pokemon is clicked, return index Number(which are over 0)
-		const  findSamePokemon  = selectFavoritePokemons.findIndex(function(element){
-			return element.name === name;
+		// if same pokemon in selectFavoritePokemons is clicked, return index Number(which are over 0)
+		const  findSamePokemon  = selectFavoritePokemons.findIndex((pokemon) => {
+			return pokemon.name === name;
 		});
-
 		
 		// if same pokemon is already in selectFavoritePokemons
 		if(findSamePokemon >= 0) {
@@ -156,7 +150,7 @@ const FrontPage = () => {
 				id="demo-simple-select"
 				value={selectType}
 				label="Typ"
-				onChange={(e) => handleChange(e.target.value)}
+				onChange={(e) => handleSelectChange(e.target.value)}
 				>
 				<MenuItem value={'normal'}>Normal</MenuItem>
 				<MenuItem value={'water'}>Water</MenuItem>
@@ -178,12 +172,18 @@ const FrontPage = () => {
 				<MenuItem value={'fairy'}>Fairy</MenuItem>
 				</Select>
 			</FormControl>
-			<Tooltip title="favorite list" arrow>
+			<Tooltip
+			title={<h1 style={{ fontSize: "1rem"}}>favorite list</h1>}
+			arrow
+			>
 				<Badge badgeContent={favoritePokemonAmount} color="secondary">
 					<FavoriteIcon  sx={{ fontSize: '3rem' }} className='favoriteIcon' onClick={navigateToFavorite}/>
 				</Badge>
 			</Tooltip>
-			<Tooltip title="collected list" arrow>
+			<Tooltip 
+			title={<h1 style={{ fontSize: "1rem" }}>Collection</h1>}
+			arrow
+			>
 				<Badge badgeContent={collectedPokemonAmount} color="secondary">
 					<img className="pokeballIcon" src={`${process.env.PUBLIC_URL}/image/pokeball.png`} onClick={navigateToCollected}/>
 				</Badge>
@@ -196,13 +196,12 @@ const FrontPage = () => {
 		<>
 		{pokemonList.map((pokemon)=> (
 			<>
-			{/* send pokemon id */}
 			<div className="pokemonList" key={pokemon.name} onClick={()=>handleClick(pokemon.url.substring(34,pokemon.url.length - 1))}>
 				<div className="pokemonListImgCard" >
 					<IconButton 
 					aria-label="favorite"
 					className='pokemonListFavoriteIcon' 
-					onClick={(e)=> toggleFavorite(e,pokemon.url.substring(34,pokemon.url.length - 1), pokemon.name, pokemon.url)}
+					onClick={(e)=> toggleFavorite(e, pokemon.url.substring(34,pokemon.url.length - 1), pokemon.name, pokemon.url)}
 					>
 						<FavoriteIcon
 						className='pokemonListFavoriteIcon'
@@ -216,11 +215,6 @@ const FrontPage = () => {
 					:
 					<p>no image</p>
 					}
-					{/* < img className="pokemonListImg" alt="pokemon" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.url.substring(34,pokemon.url.length - 1)}.png`}/> */}
-
-
-					{/* < img className="pokemonListImg" alt="pokemon" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.url.substring(34,pokemon.url.length - 1)}.png`}/> */}
-			
 					
 					<p className="pokemonListName" >{pokemon.name}</p>
 				</div>
