@@ -141,6 +141,25 @@
 	font-size: 1.8rem;
 }
 
+
+/* modalToCollectedButton css style for deploy */
+.MuiButton-root.MuiButton-outlined.MuiButton-outlinedSecondary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.modalBackButton.css-suuhx0 {
+	border-radius: 1.6rem;
+	color: white;
+    border-color: white;
+	padding: 0.8rem;
+	margin-top: 1rem;
+}
+
+/* modalToCollectedButton css style for deploy */
+.MuiButton-root.MuiButton-outlined.MuiButton-outlinedSecondary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.modalToCollectedButton.css-suuhx0 {
+	border-radius: 1.6rem;
+	color: white;
+    border-color: white;
+	padding: 0.8rem;
+	margin-top: 1rem;
+}
+
 /* modalBackButton css style */
 .MuiButton-root.MuiButton-outlined.MuiButton-outlinedSecondary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.modalBackButton.css-wnpvqa-MuiButtonBase-root-MuiButton-root {
 	border-radius: 1.6rem;
@@ -151,24 +170,6 @@
 }
 
 /* modalBackButton css style for deploy */
-.MuiButton-root.MuiButton-outlined.MuiButton-outlinedSecondary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.modalBackButton.css-suuhx0 {
-	border-radius: 1.6rem;
-	color: white;
-    border-color: white;
-	padding: 0.8rem;
-	margin-top: 1rem;
-}
-
-/* modalToCollectedButton css style  */
-.MuiButton-root.MuiButton-outlined.MuiButton-outlinedSecondary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.modalToCollectedtButton.css-wnpvqa-MuiButtonBase-root-MuiButton-root {
-	border-radius: 1.6rem;
-	color: white;
-    border-color: white;
-	padding: 0.8rem;
-	margin-top: 1rem;
-}
-
-/* modalToCollectedButton css style for deploy */
 .MuiButton-root.MuiButton-outlined.MuiButton-outlinedSecondary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.modalBackButton.css-suuhx0 {
 	border-radius: 1.6rem;
 	color: white;

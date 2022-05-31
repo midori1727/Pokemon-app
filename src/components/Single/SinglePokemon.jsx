@@ -467,14 +467,6 @@ const SinglePokemon = () => {
 					}}
 					closeTimeoutMS={500}>
 			<p className='modalTitle'>You've caught the Pokémon!</p>
-			
-			<Button
-			className='modalBackButton'
-			variant="outlined"
-			color="secondary"
-			onClick={() => setIsCollectedShowModal(false)} >
-				Back to the Pokémon details
-			</Button>
 
 			<Button
 			className='modalToCollectedButton'
@@ -483,6 +475,14 @@ const SinglePokemon = () => {
 			onClick={() => {navigate('/collected'); setIsCollectedShowModal(false) }} >
 				Go to Collection
 			</Button>	
+
+			<Button
+			className='modalBackButton'
+			variant="outlined"
+			color="secondary"
+			onClick={() => setIsCollectedShowModal(false)} >
+				Back to the Pokémon details
+			</Button>
 		</Modal>
 
 
