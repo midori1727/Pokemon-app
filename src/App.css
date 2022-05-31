@@ -12,15 +12,11 @@
 	font-family: 'Roboto Flex', sans-serif !important;
 }
 
-/* .logo {
-	width: 30%;
-	height: auto;
-} */
 
 body {
-	background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%);
+	/* background-image: linear-gradient(to top, #a18cd1 0%, #fbc2eb 100%); */
 	
-	/* background-image: url("/public/image/pokemon-background-img.jpg"); */
+	background-image: url("/public/image/pokemon-wallpaper.jpg");
 }
 
  .pokemonLogo {

@@ -3,7 +3,8 @@ import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
 import reportWebVitals from './reportWebVitals';
-import { BrowserRouter as Router} from 'react-router-dom';
+// import { BrowserRouter as Router} from 'react-router-dom';
+import { HashRouter} from 'react-router-dom';
 import { Provider } from 'react-redux';
 import { store } from './app/Store';
 import { persistStore } from 'redux-persist'
@@ -13,13 +14,15 @@ let persistor = persistStore(store)
 
 ReactDOM.render(
   <React.StrictMode>
-		<Router>
+		{/* <Router> */}
+		<HashRouter basename='/'>
 			<Provider store={store}>
 				<PersistGate persistor={persistor}>
 					<App />
 				</PersistGate>
 			</Provider>
-		</Router>
+		</HashRouter>
+		{/* </Router> */}
 		
   </React.StrictMode>,
   document.getElementById('root')

@@ -180,6 +180,7 @@ const FrontPage = () => {
 					<FavoriteIcon  sx={{ fontSize: '3rem' }} className='favoriteIcon' onClick={navigateToFavorite}/>
 				</Badge>
 			</Tooltip>
+
 			<Tooltip 
 			title={<h1 style={{ fontSize: "1rem" }}>Collection</h1>}
 			arrow
@@ -209,12 +210,21 @@ const FrontPage = () => {
 						/>
 					</IconButton>
 					
-					{ < img className="pokemonListImg" alt="pokemon" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.url.substring(34,pokemon.url.length - 1)}.png`}/>
+					{/* { < img className="pokemonListImg" alt="pokemon" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.url.substring(34,pokemon.url.length - 1)}.png`}/>
 					?
 						< img className="pokemonListImg" alt="pokemon" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.url.substring(34,pokemon.url.length - 1)}.png`}/>
 					:
 					<p>no image</p>
-					}
+					} */}
+
+					<img
+					className="pokemonListImg"
+					alt={pokemon.name}
+					src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.url.substring(34,pokemon.url.length - 1)}.png`}
+					// onError={(e) => e.target.src = noimage} 
+					onError={(e) => e.target.src = `${process.env.PUBLIC_URL}/image/no-image.png`} 
+					/>
+					
 					
 					<p className="pokemonListName" >{pokemon.name}</p>
 				</div>

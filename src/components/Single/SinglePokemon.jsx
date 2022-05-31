@@ -315,8 +315,12 @@ const SinglePokemon = () => {
 				
 				<div className='singlePokemonImgButton'>
 
-					<img className="singlePokemonImg" alt="pokemon" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonId}.png`}/>
-
+					<img
+					className="singlePokemonImg"
+					alt={selectedPokemon.name}
+					src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemonId}.png`}
+					onError={(e) => e.target.src = `${process.env.PUBLIC_URL}/image/no-image.png`}
+					/>
 
 					{isAlreadyCollected ?
 
@@ -344,107 +348,102 @@ const SinglePokemon = () => {
 				</div>
 
 				<div className='singlePokemonInformationTab'>
-				<Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
-					<Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
-						<Tab label="About" {...a11yProps(0)} />
-						<Tab label="Base stats" {...a11yProps(1)} />
-						<Tab label="Evolution" {...a11yProps(2)} />
-					</Tabs>
-				</Box>
-
-				<TabPanel value={value} index={0}>
-					<Box sx={{ flexGrow: 1 }}>
-						<Grid container spacing={2}>
-							<Grid item xs={3}>
-								<Item>Type:</Item>
-							</Grid>
-							<Grid item xs={9}>
-								<Item>{selectedPokemon.types?.length === 1 ? <span className='singlepokemonDescription'>{selectedPokemon.types[0].type.name}</span> : selectedPokemon.types?.map((obj) => (<span className='space singlepokemonDescription'>{obj.type.name}</span>))}</Item>
-							</Grid>
-							<Grid item xs={3}>
-								<Item>Abilities:</Item>
-							</Grid>
-							<Grid item xs={9}>
-								<Item>{selectedPokemon.abilities?.length === 1 ? <span className='singlepokemonDescription'>{selectedPokemon.abilities[0].ability.name}</span> : selectedPokemon.abilities?.map((obj) => (<span className='space singlepokemonDescription'>{obj.ability.name}</span>))}</Item>
-							</Grid>
-							<Grid item xs={3}>
-								<Item>Weight:</Item>
-							</Grid>
-							<Grid item xs={9}>
-								<Item><span className='singlepokemonDescription'>{selectedPokemon.weight/10} kg</span></Item>
-							</Grid>
-							<Grid item xs={3}>
-								<Item>Height:</Item>
-							</Grid>
-							<Grid item xs={9}>
-								<Item><span className='singlepokemonDescription'>{selectedPokemon.height*10} cm</span></Item>
-							</Grid>
-						</Grid>
+					<Box sx={{ borderBottom: 1, borderColor: 'divider' }}>
+						<Tabs value={value} onChange={handleChange} aria-label="basic tabs example">
+							<Tab label="About" {...a11yProps(0)} />
+							<Tab label="Base stats" {...a11yProps(1)} />
+							<Tab label="Evolution" {...a11yProps(2)} />
+						</Tabs>
 					</Box>
-				</TabPanel>
 
-				<TabPanel value={value} index={1}>
-					<ResponsiveContainer width="95%" height={400}>
-						<BarChart
-						data={pokemonStatsData}
-						margin={{
-							top: 5,
-							right: 30,
-							left: 20,
-							bottom: 5
-						}}
-						barSize={20}
-						>
-						<XAxis dataKey="name" scale="point" padding={{ left: 10, right: 10 }} />
-						<YAxis  type="number" domain={[0, 100]}/>
-						<Tooltip />
-						<Legend />
-						<CartesianGrid strokeDasharray="3 3" />
-						<Bar dataKey="point" fill="#8884d8" background={{ fill: "#eee" }} />
-						</BarChart>
-					</ResponsiveContainer>
+					<TabPanel value={value} index={0}>
+						<Box sx={{ flexGrow: 1 }}>
+							<Grid container spacing={2}>
+								<Grid item xs={3}>
+									<Item>Type:</Item>
+								</Grid>
+								<Grid item xs={9}>
+									<Item>{selectedPokemon.types?.length === 1 ? <span className='singlepokemonDescription'>{selectedPokemon.types[0].type.name}</span> : selectedPokemon.types?.map((obj) => (<span className='space singlepokemonDescription'>{obj.type.name}</span>))}</Item>
+								</Grid>
+								<Grid item xs={3}>
+									<Item>Abilities:</Item>
+								</Grid>
+								<Grid item xs={9}>
+									<Item>{selectedPokemon.abilities?.length === 1 ? <span className='singlepokemonDescription'>{selectedPokemon.abilities[0].ability.name}</span> : selectedPokemon.abilities?.map((obj) => (<span className='space singlepokemonDescription'>{obj.ability.name}</span>))}</Item>
+								</Grid>
+								<Grid item xs={3}>
+									<Item>Weight:</Item>
+								</Grid>
+								<Grid item xs={9}>
+									<Item><span className='singlepokemonDescription'>{selectedPokemon.weight/10} kg</span></Item>
+								</Grid>
+								<Grid item xs={3}>
+									<Item>Height:</Item>
+								</Grid>
+								<Grid item xs={9}>
+									<Item><span className='singlepokemonDescription'>{selectedPokemon.height*10} cm</span></Item>
+								</Grid>
+							</Grid>
+						</Box>
+					</TabPanel>
 
-				</TabPanel>
+					<TabPanel value={value} index={1}>
+						<ResponsiveContainer width="95%" height={400}>
+							<BarChart
+							data={pokemonStatsData}
+							margin={{
+								top: 5,
+								right: 30,
+								left: 20,
+								bottom: 5
+							}}
+							barSize={20}
+							>
+							<XAxis dataKey="name" scale="point" padding={{ left: 10, right: 10 }} />
+							<YAxis  type="number" domain={[0, 100]}/>
+							<Tooltip />
+							<Legend />
+							<CartesianGrid strokeDasharray="3 3" />
+							<Bar dataKey="point" fill="#8884d8" background={{ fill: "#eee" }} />
+							</BarChart>
+						</ResponsiveContainer>
 
-				<TabPanel value={value} index={2}>
+					</TabPanel>
 
-				
-				<img
-				className="evolutionImage"
-				alt="pokemon" 
-				src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${evolutionFirst.substring(42,evolutionFirst.length - 1)}.png`}
-				onClick={()=>handleClick(evolutionFirst.substring(42,evolutionFirst.length - 1))}
-				/>
-
-
-				{evolutionSecond &&
-				evolutionSecond.map((pokemon) => (
+					<TabPanel value={value} index={2}>
 					<img
 					className="evolutionImage"
-					alt="pokemon"
-					src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.substring(42,pokemon.length - 1)}.png`}
-					onClick={()=>handleClick(pokemon.substring(42,pokemon.length - 1))}
+					alt="pokemon" 
+					src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${evolutionFirst.substring(42,evolutionFirst.length - 1)}.png`}
+					onClick={()=>handleClick(evolutionFirst.substring(42,evolutionFirst.length - 1))}
+					onError={(e) => e.target.src = `${process.env.PUBLIC_URL}/image/no-image.png`} 
 					/>
-				))
-				}
 
+					{evolutionSecond &&
+					evolutionSecond.map((pokemon) => (
+						<img
+						className="evolutionImage"
+						alt="pokemon"
+						src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.substring(42,pokemon.length - 1)}.png`}
+						onClick={()=>handleClick(pokemon.substring(42,pokemon.length - 1))}
+						onError={(e) => e.target.src = `${process.env.PUBLIC_URL}/image/no-image.png`} 
+						/>
+					))
+					}
 
-				{evolutionThird && 
-				evolutionThird.map((pokemon) => (
-					<img
-					className="evolutionImage"
-					alt="pokemon"
-					src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.substring(42,pokemon.length - 1)}.png`}
-					onClick={()=>handleClick(pokemon.substring(42,pokemon.length - 1))}
-					/>
-				))
-				}
-				
-					
-				</TabPanel>
-
+					{evolutionThird && 
+					evolutionThird.map((pokemon) => (
+						<img
+						className="evolutionImage"
+						alt="pokemon"
+						src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.substring(42,pokemon.length - 1)}.png`}
+						onClick={()=>handleClick(pokemon.substring(42,pokemon.length - 1))}
+						onError={(e) => e.target.src = `${process.env.PUBLIC_URL}/image/no-image.png`} 
+						/>
+					))
+					}
+					</TabPanel>
 				</div>
-				
 			</div>
 		</div>
 
@@ -453,8 +452,8 @@ const SinglePokemon = () => {
 		: <LoadingAnimation />
 		}
 
-
-		< Modal isOpen={isCollectedShowModal}
+		< Modal
+		isOpen={isCollectedShowModal}
 				onRequestClose={() => setIsCollectedShowModal(false)}
 				overlayClassName={{
 					base: "overlay-base",
@@ -483,8 +482,7 @@ const SinglePokemon = () => {
 			color="secondary"
 			onClick={() => {navigate('/collected'); setIsCollectedShowModal(false) }} >
 				Go to Collection
-			</Button>
-			
+			</Button>	
 		</Modal>
 
 
@@ -510,7 +508,6 @@ const SinglePokemon = () => {
 			onClick={() => setIsFailedShowModal(false) }>
 				Back to the Pokémon details
 			</Button>
-			
 		</Modal>
 		
 		</>
