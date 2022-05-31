@@ -84,6 +84,12 @@
 	height: 2.5rem;
 }
 
+/* favorite icon hover in cards for deploy */
+.MuiButtonBase-root.MuiIconButton-root.MuiIconButton-sizeMedium.pokemonListFavoriteIcon.css-1yxmbwk {
+	width: 2.5rem;
+	height: 2.5rem;
+}
+
 .previousButton {
 	margin: 1rem !important;
 }
