@@ -22,8 +22,13 @@
 	cursor: pointer;
 }
 
-
+/* favorite & collected icons number css */
 .BaseBadge-badge.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anchorOriginTopRightRectangular.MuiBadge-overlapRectangular.MuiBadge-colorSecondary.css-jcn4dz-MuiBadge-badge {
+	margin-top: 0.5rem;
+}
+
+/* favorite & collected icons number css for deploy */
+.BaseBadge-badge.MuiBadge-badge.MuiBadge-standard.MuiBadge-anchorOriginTopRight.MuiBadge-anchorOriginTopRightRectangular.MuiBadge-overlapRectangular.MuiBadge-colorSecondary.css-zhwrlg {
 	margin-top: 0.5rem;
 }
 
@@ -35,13 +40,10 @@
 	box-shadow: 5px 5px 2px 1px rgba(0, 0, 255, .2);
 	padding: 1rem;
 	margin: 2rem;
-	/* width: 10rem;
-	height: 14rem; */
 	width: 12rem;
 	height: 16rem;
 	cursor: pointer;
-
-	transition: transform .4s ease;/* ゆっくり変化させる */
+	transition: transform .4s ease;
 }
 
 .pokemonList:hover {
@@ -50,8 +52,6 @@
 
 
 .pokemonListImgCard {
-	/* width: 10rem;
-	height: 10rem; */
 	width: 12rem;
 	height: 12rem;
 	display: flex;

@@ -210,18 +210,11 @@ const FrontPage = () => {
 						/>
 					</IconButton>
 					
-					{/* { < img className="pokemonListImg" alt="pokemon" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.url.substring(34,pokemon.url.length - 1)}.png`}/>
-					?
-						< img className="pokemonListImg" alt="pokemon" src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.url.substring(34,pokemon.url.length - 1)}.png`}/>
-					:
-					<p>no image</p>
-					} */}
 
 					<img
 					className="pokemonListImg"
 					alt={pokemon.name}
 					src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.url.substring(34,pokemon.url.length - 1)}.png`}
-					// onError={(e) => e.target.src = noimage} 
 					onError={(e) => e.target.src = `${process.env.PUBLIC_URL}/image/no-image.png`} 
 					/>
 					

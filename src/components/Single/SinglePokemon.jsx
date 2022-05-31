@@ -477,7 +477,7 @@ const SinglePokemon = () => {
 			</Button>
 
 			<Button
-			className='modalToCapturedListButton'
+			className='modalToCollectedButton'
 			variant="outlined"
 			color="secondary"
 			onClick={() => {navigate('/collected'); setIsCollectedShowModal(false) }} >
