@@ -37,7 +37,7 @@
 	justify-content: center;
 	background-color: white;
 	border-radius: 0.5rem;
-	box-shadow: 5px 5px 2px 1px rgba(0, 0, 255, .2);
+	filter: drop-shadow(10px 10px 10px rgba(0,0,0,0.6));
 	padding: 1rem;
 	margin: 2rem;
 	width: 12rem;
@@ -49,7 +49,6 @@
 .pokemonList:hover {
 	transform: scale(1.1);
 }
-
 
 .pokemonListImgCard {
 	width: 12rem;
