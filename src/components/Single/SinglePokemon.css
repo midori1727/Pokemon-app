@@ -3,7 +3,6 @@
 	justify-content: center;
 }
 
-
 .singlePokemonCard {
 	margin: 3rem;
 	width: 50rem;
@@ -35,7 +34,6 @@
 
 .singlePokemonImgButton {
 	display: flex;
-	/* justify-content: center; */
 	align-items: center;
 	justify-content: space-around;
 	margin-left: 5rem;
@@ -47,12 +45,16 @@
 	height: 20rem;
 }
 
-
 /* catchPokemonButton css style */
 .MuiButton-root.MuiButton-outlined.MuiButton-outlinedSecondary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.catchPokemonButton.css-wnpvqa-MuiButtonBase-root-MuiButton-root {
 	border-radius: 1.6rem;
 	color: white;
     border-color: white;
+}
+
+.MuiButton-root.MuiButton-outlined.MuiButton-outlinedSecondary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.catchPokemonButton.css-wnpvqa-MuiButtonBase-root-MuiButton-root:hover {
+	color: #8e66ec;
+	background-color: white;
 }
 
 /* catchPokemonButton css style for deploy */
@@ -62,11 +64,22 @@
     border-color: white;
 }
 
+.MuiButton-root.MuiButton-outlined.MuiButton-outlinedSecondary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.catchPokemonButton.css-suuhx0:hover {
+	color: #8e66ec;
+	background-color: white;
+}
+
 /* releasePokemonButton css style */
 .MuiButton-root.MuiButton-outlined.MuiButton-outlinedSecondary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.releasePokemonButton.css-wnpvqa-MuiButtonBase-root-MuiButton-root {
 	border-radius: 1.6rem;
 	color: white;
     border-color: white;
+}
+
+/* hover */
+.MuiButton-root.MuiButton-outlined.MuiButton-outlinedSecondary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.releasePokemonButton.css-wnpvqa-MuiButtonBase-root-MuiButton-root:hover {
+	color: #8e66ec;
+	background-color: white;
 }
 
 /* releasePokemonButton css style for deploy*/
@@ -76,6 +89,11 @@
     border-color: white;
 }
 
+/* hover */
+.MuiButton-root.MuiButton-outlined.MuiButton-outlinedSecondary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.releasePokemonButton.css-suuhx0:hover {
+	color: #8e66ec;
+	background-color: white;
+}
 
 .singlePokemonInformationTab {
 	border-radius: 3rem 3rem 0 0;
@@ -92,20 +110,14 @@
 	font-family: 'Roboto Flex', sans-serif;
 }
 
-
-
-
 /* Tab css title style */
 .MuiButtonBase-root.MuiTab-root.MuiTab-textColorPrimary.css-1h9z7r5-MuiButtonBase-root-MuiTab-root {
 	font-family: 'Roboto Flex', sans-serif;
 }
 
-
-
 .MuiTabs-scroller {
 	margin-top: 1rem;
 }
-
 
 /* Tab About css style */
 .MuiPaper-root.MuiPaper-elevation.MuiPaper-rounded.MuiPaper-elevation1.css-iocxey-MuiPaper-root {
@@ -141,14 +153,19 @@
 	font-size: 1.8rem;
 }
 
-
-/* modalToCollectedButton css style for deploy */
-.MuiButton-root.MuiButton-outlined.MuiButton-outlinedSecondary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.modalBackButton.css-suuhx0 {
+ /* modalToCollectedButton css style  */
+.MuiButton-root.MuiButton-outlined.MuiButton-outlinedSecondary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.modalToCollectedButton.css-wnpvqa-MuiButtonBase-root-MuiButton-root {
 	border-radius: 1.6rem;
 	color: white;
     border-color: white;
 	padding: 0.8rem;
 	margin-top: 1rem;
+}
+
+/* hover */
+.MuiButton-root.MuiButton-outlined.MuiButton-outlinedSecondary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.modalToCollectedButton.css-wnpvqa-MuiButtonBase-root-MuiButton-root:hover {
+	color: #8e66ec;
+	background-color: white;
 }
 
 /* modalToCollectedButton css style for deploy */
@@ -160,6 +177,12 @@
 	margin-top: 1rem;
 }
 
+/* hover */
+.MuiButton-root.MuiButton-outlined.MuiButton-outlinedSecondary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.modalToCollectedButton.css-suuhx0:hover {
+	color: #8e66ec;
+	background-color: white;
+}
+
 /* modalBackButton css style */
 .MuiButton-root.MuiButton-outlined.MuiButton-outlinedSecondary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.modalBackButton.css-wnpvqa-MuiButtonBase-root-MuiButton-root {
 	border-radius: 1.6rem;
@@ -169,6 +192,12 @@
 	margin-top: 1rem;
 }
 
+/* hover */
+.MuiButton-root.MuiButton-outlined.MuiButton-outlinedSecondary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.modalBackButton.css-wnpvqa-MuiButtonBase-root-MuiButton-root:hover {
+	color: #8e66ec;
+	background-color: white;
+}
+
 /* modalBackButton css style for deploy */
 .MuiButton-root.MuiButton-outlined.MuiButton-outlinedSecondary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.modalBackButton.css-suuhx0 {
 	border-radius: 1.6rem;
@@ -176,6 +205,12 @@
     border-color: white;
 	padding: 0.8rem;
 	margin-top: 1rem;
+}
+
+/* hover */
+.MuiButton-root.MuiButton-outlined.MuiButton-outlinedSecondary.MuiButton-sizeMedium.MuiButton-outlinedSizeMedium.MuiButtonBase-root.modalBackButton.css-suuhx0:hover {
+	color: #8e66ec;
+	background-color: white;
 }
 
 /* Modal Popup */
@@ -197,19 +232,19 @@
 	justify-content: center;
 	align-items: center;
 	flex-direction: column;
-  }
+}
   
-  .overlay-after {
+.overlay-after {
 	background-color: rgba(0, 0, 0, 0.8);
 	opacity: 1;
-  }
+}
   
-  .overlay-before {
+.overlay-before {
 	background-color: rgba(0, 0, 0, 0);
 	opacity: 0;
-  }
+}
   
-  .content-base {
+.content-base {
 	position: relative;
 	top: auto;
 	left: auto;
@@ -227,9 +262,9 @@
 	transition-property: background-color, width, height;
 	transition-duration: 500ms;
 	transition-timing-function: ease-in-out;
-  }
+}
   
-  .content-after-run-away {
+.content-after-run-away {
 	width: 70%;
 	height: 40%;
 	background: -webkit-linear-gradient(90deg, #EC6F66 10%, #F3A183 90%); 
@@ -238,15 +273,15 @@
 	background:      -o-linear-gradient(90deg, #EC6F66 10%, #F3A183 90%);
 	background:         linear-gradient(90deg, #EC6F66 10%, #F3A183 90%);
 	flex-direction: column;
-  }
+}
   
-  .content-before {
+.content-before {
 	width: 0%;
 	height: 0%;
 	background-color: transparent;
-  }
+}
 
-  .content-after {
+.content-after {
 	width: 70%;
 	height: 40%;
 	background: -webkit-linear-gradient(90deg, #8e66ec 10%, #927ee9 90%); 
@@ -255,4 +290,4 @@
 	background:      -o-linear-gradient(90deg, #8e66ec 10%, #927ee9 90%);
 	background:         linear-gradient(90deg, #8e66ec 10%, #927ee9 90%);
 	flex-direction: column;
-  }
+}

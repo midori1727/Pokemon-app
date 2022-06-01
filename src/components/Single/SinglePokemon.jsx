@@ -7,7 +7,6 @@ import Modal from 'react-modal';
 import { selectCollected, selectCollectedAmount, addCollectedPokemon, removeCollectedPokemon } from "../../features/collectedSlice";
 import Animation from '../Animation/Animation'
 import LoadingAnimation from '../LoadingAnimation/LoadingAnimation'
-
 import PropTypes from 'prop-types';
 import Tabs from '@mui/material/Tabs';
 import Tab from '@mui/material/Tab';
@@ -17,7 +16,6 @@ import Button from '@mui/material/Button';
 import Paper from '@mui/material/Paper';
 import Grid from '@mui/material/Grid';
 import { styled } from '@mui/material/styles';
-
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend, ResponsiveContainer} from "recharts";
 
 
@@ -33,13 +31,13 @@ const SinglePokemon = () => {
 	const [ evolutionThird, setEvolutionThird ] =useState([])
 	const [ collected, setCollected ] = useState(false)
 	const [ isAlreadyCollected, setIsAlreadyCollected ] = useState(false)
-	const collectedPokemonAmount = useSelector(selectCollectedAmount)
-	const selectcollectedPokemons = useSelector(selectCollected)
 	const [ catching, setCatching ] = useState(false)
 	const [ isCollectedShowModal, setIsCollectedShowModal ] = useState(false);
 	const [ isFailedShowModal, setIsFailedShowModal ] = useState(false);
 	const params = useParams()
 	const pokemonId = params.id
+	const collectedPokemonAmount = useSelector(selectCollectedAmount)
+	const selectcollectedPokemons = useSelector(selectCollected)
 	const navigate = useNavigate()
 	const dispatch = useDispatch()
 	
@@ -103,10 +101,9 @@ const SinglePokemon = () => {
 		try {
 			const getSelectedPokemon = async () => {
 				const response = await axios.get(`https://pokeapi.co/api/v2/pokemon/${pokemonId}`);
-				console.log('response',response);
 				setSelectedPokemon(response.data)
 			
-
+				// set pokemon base stats
 				const pokemonStatsDataArray = [];
 				let len = response.data.stats.length;
 				for (let i = 0; i < len; i++) {
@@ -174,7 +171,6 @@ const SinglePokemon = () => {
 					case 'fairy':
 						setBackgroundColor('#FCD8E8')
 						break;
-
 				}
 
 	
@@ -183,8 +179,6 @@ const SinglePokemon = () => {
 					const collectedPokemonNames = selectcollectedPokemons.map((collectedPokemons) => {
 						return collectedPokemons.name
 					})
-					
-					console.log(collectedPokemonNames.includes(response.data.name));
 					setIsAlreadyCollected(collectedPokemonNames.includes(response.data.name))
 				}
 
@@ -197,17 +191,16 @@ const SinglePokemon = () => {
 
 	},[pokemonId, collectedPokemonAmount])
 
-	// get pokemon japanese name
+	// get pokemon japanese name and evolution
 	useEffect(() => {
 		try {
-			const getSelectedPokemonJapaneseName = async () => {
+			const getSelectedPokemonJapaneseNameAndEvolution = async () => {
 				
 				const response = await axios.get(`https://pokeapi.co/api/v2/pokemon-species/${pokemonId}`);
 				setSelectedPokemonsJapaneseName(response.data.names[0].name);
 				setEvolutionChainUrl(response.data.evolution_chain.url)
-			
 			}
-			getSelectedPokemonJapaneseName()
+			getSelectedPokemonJapaneseNameAndEvolution()
 			
 		} catch(error) {
 				console.log(error);
@@ -217,18 +210,14 @@ const SinglePokemon = () => {
 
 
 
+	// get pokemon evolution data from evolutionChainUrl
 	useEffect(() => {
 		try {
 			const getEvolutionChain = async () => {
-				
 				const response = await axios.get(evolutionChainUrl);
 				const pokemonChain = response.data.chain
-				console.log('evolution', pokemonChain);
-				
-				
-				// デフォルトのポケモンをセット
+				// set default(first) pokemon
 				setEvolutionFirst(pokemonChain.species.url)
-
 
 				let evolutionSecondArray = []
 				let evolutionThirddArray = []
@@ -261,38 +250,37 @@ const SinglePokemon = () => {
 
 	const catchPokemon = (id, name, url) => {
 		
-		let total = 0
+		let average = 0
 		let probability
 
 		pokemonStatsData.map((data) => {
-			total =+ data.point
+			average =+ data.point
 		})
 
-		if(total > 80){
-			probability = 10
-		} else if(total > 50) {
+		if(average > 90){
 			probability = 20
-		}  else if(total > 30) {
-			probability = 40
-		}  else if(total > 20) {
-			probability = 60
+		} else if(average > 50) {
+			probability = 30
+		}  else if(average > 40) {
+			probability = 50
+		}  else if(average > 20) {
+			probability = 70
 		}
 
 		let result = Math.random() < probability / 100
-
 		setCollected(result)
 		setCatching(true)
 	
 		setTimeout(() => {
 			setCatching(false)
-			if(collected) {
+			if(result) {
 				setIsCollectedShowModal(true)
 			} else {
 				setIsFailedShowModal(true)
 			}
 		}, 1 * 1000)
 
-		if(collected) {
+		if(result) {
 			dispatch(addCollectedPokemon({id, name, url}))
 		}
 	}

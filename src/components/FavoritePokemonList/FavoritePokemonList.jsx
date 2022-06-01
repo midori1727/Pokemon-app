@@ -10,7 +10,6 @@ import FavoriteIcon from '@mui/icons-material/Favorite';
 import IconButton from '@mui/material/IconButton';
 
 
-
 const FavoritePokemonList = () => {
 
 	const [ newFavoritePokemonList, setNewFavoritePokemonList ] = useState([])
@@ -19,15 +18,14 @@ const FavoritePokemonList = () => {
 	const dispatch = useDispatch()
 
 
-
 	useEffect(() => {
 
 		try {
 			const getFavoritePokemonList = async () => {
 				const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0')
-				console.log(response.data.results)
 				const allPokemonList = response.data.results
 	
+				// find pokemons that is in favorite list
 				const newFavoritePokemon = favoritePokemonList.filter(favoritePokemon => 
 					allPokemonList.filter(allPokemon => allPokemon.name === favoritePokemon.name).length > 0);
 	
@@ -55,7 +53,7 @@ const FavoritePokemonList = () => {
 
 	return (
 		<>
-		<h1>Favorite pokemon list</h1>
+		<h1 className='favoriteTitle'>My favorites</h1>
 		<div className="pokemonListWrapper">
 			
 

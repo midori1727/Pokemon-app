@@ -6,7 +6,6 @@ import axios from 'axios'
 import { selectCollected } from '../../features/collectedSlice'
 import { selectFavorite, addFavoritePokemon, removeFavoritePokemon } from '../../features/favoriteSlice'
 import LoadingAnimation from '../LoadingAnimation/LoadingAnimation'
-
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import IconButton from '@mui/material/IconButton';
 
@@ -27,13 +26,11 @@ const CollectedPokemonList = () => {
 		try {
 			const getCollectedPokemonList = async () => {
 				const response = await axios.get('https://pokeapi.co/api/v2/pokemon?limit=100000&offset=0')
-				console.log(response.data.results)
 				const allPokemonList = response.data.results
 	
 				const newCollectedPokemon = collectedPokemonList.filter(collectedPokemon => 
 					allPokemonList.filter(allPokemon => allPokemon.name === collectedPokemon.name).length > 0);
 	
-				console.log(newCollectedPokemon);
 				setNewColledcedPokemonList(newCollectedPokemon)
 			}
 			getCollectedPokemonList()
@@ -51,8 +48,9 @@ const CollectedPokemonList = () => {
 
 	const toggleFavorite = (e,id, name, url) => {
 		e.stopPropagation()
+		
 		// if same pokemon is clicked, return index Number(which are over 0)
-		const  findSamePokemon  = selectFavoritePokemons.findIndex(function(element){
+		const  findSamePokemon  = selectFavoritePokemons.findIndex((element) => {
 			return element.name === name;
 		});
 
@@ -73,7 +71,7 @@ const CollectedPokemonList = () => {
 
 	return (
 		<>
-		<h1>Your collection</h1>
+		<h1 className='collectionTitle'>My collection</h1>
 		<div className="pokemonListWrapper">
 			
 

@@ -3,7 +3,7 @@ import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
   amount: 0,
-//   favoritePokemons: [{id: '1', name: 'bulbasaur', url: 'https://pokeapi.co/api/v2/pokemon/1/', isFavorite: true}, {id: '4', name: 'charmander',  url: 'https://pokeapi.co/api/v2/pokemon/4/', isFavorite: true}]
+// this form
 //   favoritePokemons: [{id: '', name: '', url: '', isFavorite: false}]
 	collectedPokemons: [],
 };
@@ -23,7 +23,6 @@ export const collectedSlice = createSlice({
 			state.amount -= 1
 			state.collectedPokemons = state.collectedPokemons.filter((pokemon) => pokemon.id !== action.payload)
 		}
-
   },
 
 });
