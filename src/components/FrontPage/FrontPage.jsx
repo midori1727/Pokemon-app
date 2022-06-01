@@ -32,8 +32,6 @@ const FrontPage = () => {
 	const selectFavoritePokemons = useSelector(selectFavorite)
 	const collectedPokemonAmount = useSelector(selectCollectedAmount)
 
-
-
 	useEffect(() => {
 
 		try {
@@ -45,7 +43,7 @@ const FrontPage = () => {
 					setPokemonList(fileteredPokemons)
 					setpreviousPokemonPage('')
 					setNextPokemonPage('')
-					
+
 				} else {
 					const response = await axios.get((currentPokemonPage))
 					if(response.data.results){
@@ -56,13 +54,13 @@ const FrontPage = () => {
 						})
 						setPokemonList(newPokemonList)
 					}
-		
+
 					if(response.data.previous){
 						setpreviousPokemonPage(response.data.previous)
 					} else {
 						setpreviousPokemonPage('')
 					}
-		
+
 					if(response.data.next){
 						setNextPokemonPage(response.data.next)
 					} else {
@@ -78,9 +76,9 @@ const FrontPage = () => {
 			}
 			console.log(error)
 		}
-	
+
 	},[currentPokemonPage,inputPokemon,selectFavoritePokemons])
-	
+
 	const handleClick = (pokemonId) => {
 		navigate(`/${pokemonId}`)
 	}
@@ -112,14 +110,14 @@ const FrontPage = () => {
 	const navigateToCollected = () => {
 		navigate('/collected')
 	}
-	
+
 	const toggleFavorite = (e,id, name, url) => {
 		e.stopPropagation()
 		// if same pokemon in selectFavoritePokemons is clicked, return index Number(which are over 0)
 		const  findSamePokemon  = selectFavoritePokemons.findIndex((pokemon) => {
 			return pokemon.name === name;
 		});
-		
+
 		// if same pokemon is already in selectFavoritePokemons
 		if(findSamePokemon >= 0) {
 			dispatch(removeFavoritePokemon(id))
@@ -129,20 +127,20 @@ const FrontPage = () => {
 		}
 	}
 
-	
+
 	const favoritePokemonList = selectFavoritePokemons.map((p) => {
 		return p.name
 	})
 
-	
-	  
+
+
 	return (
 
 		<>
 		<div className='headerWrapper'>
 
-			<TextField id="outlined-search" label="Search Pokémon" type="search" onChange={handleInputChange} value={inputPokemon}/>	
-			
+			<TextField id="outlined-search" label="Search Pokémon" type="search" onChange={handleInputChange} value={inputPokemon}/>
+
 			<FormControl sx={{ width: '10rem' }}>
 				<InputLabel id="demo-simple-select-label">Type</InputLabel>
 				<Select
@@ -181,7 +179,7 @@ const FrontPage = () => {
 				</Badge>
 			</Tooltip>
 
-			<Tooltip 
+			<Tooltip
 			title={<h1 style={{ fontSize: "1rem" }}>Collection</h1>}
 			arrow
 			>
@@ -191,7 +189,7 @@ const FrontPage = () => {
 			</Tooltip>
 		</div>
 		<div className="pokemonListWrapper">
-			
+
 
 		{pokemonList ?
 		<>
@@ -199,9 +197,9 @@ const FrontPage = () => {
 			<>
 			<div className="pokemonList" key={pokemon.name} onClick={()=>handleClick(pokemon.url.substring(34,pokemon.url.length - 1))}>
 				<div className="pokemonListImgCard" >
-					<IconButton 
+					<IconButton
 					aria-label="favorite"
-					className='pokemonListFavoriteIcon' 
+					className='pokemonListFavoriteIcon'
 					onClick={(e)=> toggleFavorite(e, pokemon.url.substring(34,pokemon.url.length - 1), pokemon.name, pokemon.url)}
 					>
 						<FavoriteIcon
@@ -209,16 +207,16 @@ const FrontPage = () => {
 						style={{ color: favoritePokemonList.includes(pokemon.name) ? '#F44336' : 'gray' }}
 						/>
 					</IconButton>
-					
+
 
 					<img
 					className="pokemonListImg"
 					alt={pokemon.name}
 					src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.url.substring(34,pokemon.url.length - 1)}.png`}
-					onError={(e) => e.target.src = `${process.env.PUBLIC_URL}/image/no-image.png`} 
+					onError={(e) => e.target.src = `${process.env.PUBLIC_URL}/image/no-image.png`}
 					/>
-					
-					
+
+
 					<p className="pokemonListName" >{pokemon.name}</p>
 				</div>
 			</div>

@@ -250,12 +250,18 @@ const SinglePokemon = () => {
 
 	const catchPokemon = (id, name, url) => {
 		
-		let average = 0
 		let probability
-
+		let pointsArray = []
+		
 		pokemonStatsData.map((data) => {
-			average =+ data.point
+			pointsArray.push(data.point)
 		})
+
+		let sum = pointsArray.reduce((a, b) => {
+			return a + b;
+		});
+
+		let average = sum / 6
 
 		if(average > 90){
 			probability = 20
@@ -265,6 +271,8 @@ const SinglePokemon = () => {
 			probability = 50
 		}  else if(average > 20) {
 			probability = 70
+		} else {
+			probability = 80
 		}
 
 		let result = Math.random() < probability / 100
@@ -295,11 +303,13 @@ const SinglePokemon = () => {
 		{selectedPokemon && !catching
 		?
 		<div className="singlePokemonWrapper">
-			<div className='singlePokemonCard' S
+			<div className='singlePokemonCard'
 			style={{  background: backgroundColor}}>
 			
-				<h1 className='singlePokemonName'>{selectedPokemon.name}</h1>
-				{selectedPokemonsJapaneseName && <h2 className='singlePokemonJapaneseName'>{selectedPokemonsJapaneseName}</h2>}
+				<h1 className='singlePokemonName' >{selectedPokemon.name}</h1>
+				{selectedPokemonsJapaneseName && 
+				<h2 className='singlePokemonJapaneseName'>{selectedPokemonsJapaneseName}</h2>
+				}
 				
 				<div className='singlePokemonImgButton'>
 
@@ -351,13 +361,13 @@ const SinglePokemon = () => {
 									<Item>Type:</Item>
 								</Grid>
 								<Grid item xs={9}>
-									<Item>{selectedPokemon.types?.length === 1 ? <span className='singlepokemonDescription'>{selectedPokemon.types[0].type.name}</span> : selectedPokemon.types?.map((obj) => (<span className='space singlepokemonDescription'>{obj.type.name}</span>))}</Item>
+									<Item>{selectedPokemon.types?.length === 1 ? <span className='singlepokemonDescription'>{selectedPokemon.types[0].type.name}</span> : selectedPokemon.types?.map((obj) => (<span className='space singlepokemonDescription' key={obj.type.name}>{obj.type.name}</span>))}</Item>
 								</Grid>
 								<Grid item xs={3}>
 									<Item>Abilities:</Item>
 								</Grid>
 								<Grid item xs={9}>
-									<Item>{selectedPokemon.abilities?.length === 1 ? <span className='singlepokemonDescription'>{selectedPokemon.abilities[0].ability.name}</span> : selectedPokemon.abilities?.map((obj) => (<span className='space singlepokemonDescription'>{obj.ability.name}</span>))}</Item>
+									<Item>{selectedPokemon.abilities?.length === 1 ? <span className='singlepokemonDescription'>{selectedPokemon.abilities[0].ability.name}</span> : selectedPokemon.abilities?.map((obj) => (<span className='space singlepokemonDescription' key={obj.ability.name}>{obj.ability.name}</span>))}</Item>
 								</Grid>
 								<Grid item xs={3}>
 									<Item>Weight:</Item>
@@ -415,6 +425,7 @@ const SinglePokemon = () => {
 						src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.substring(42,pokemon.length - 1)}.png`}
 						onClick={()=>handleClick(pokemon.substring(42,pokemon.length - 1))}
 						onError={(e) => e.target.src = `${process.env.PUBLIC_URL}/image/no-image.png`} 
+						// key={pokemon.name}
 						/>
 					))
 					}
@@ -427,6 +438,7 @@ const SinglePokemon = () => {
 						src={`https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/official-artwork/${pokemon.substring(42,pokemon.length - 1)}.png`}
 						onClick={()=>handleClick(pokemon.substring(42,pokemon.length - 1))}
 						onError={(e) => e.target.src = `${process.env.PUBLIC_URL}/image/no-image.png`} 
+						// key={pokemon.name}
 						/>
 					))
 					}
